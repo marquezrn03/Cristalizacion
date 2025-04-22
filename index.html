@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cristal·lització: Fonaments, Disseny i Balanços</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in-section { opacity: 0; animation: fadeIn 0.8s ease-out forwards; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #374151; font-size: 0.875rem; }
+        input[type="range"] { width: 100%; cursor: pointer; accent-color: #0ea5e9; /* sky-500 */ }
+        input[type="number"], select { padding: 0.5rem; border: 1px solid #D1D5DB; border-radius: 0.375rem; width: 100%; }
+        button, .styled-button-link { background-color: #38bdf8; /* sky-400 */ color: #075985; /* sky-900 */ padding: 0.5rem 1rem; border-radius: 0.375rem; font-weight: 600; transition: background-color 0.2s; display: inline-block; text-align: center; border: none; cursor: pointer;}
+        button:hover, .styled-button-link:hover { background-color: #0ea5e9; /* sky-500 */ }
+        button:disabled { background-color: #bae6fd; /* sky-200 */ cursor: not-allowed; }
+        h1 { color: #111827; font-size: 1.875rem; line-height: 2.25rem; font-weight: 700;}
+        h2 { color: #111827; font-size: 1.5rem; line-height: 2rem; font-weight: 700;}
+        h3 { color: #0c4a6e; /* sky-800 */ font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; border-bottom: 2px solid #7dd3fc; /* sky-300 */ padding-bottom: 0.35rem; margin-top: 2rem; margin-bottom: 1rem; }
+        h4 { color: #0369a1; /* sky-700 */ font-size: 1.1rem; line-height: 1.6rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem;}
+        p, li { color: #374151; line-height: 1.75; margin-bottom: 1rem; }
+        strong { color: #1F2937; font-weight: 600; }
+        blockquote { border-left: 6px solid #7dd3fc; /* sky-300 */ padding: 1rem 1.5rem; margin: 2rem 0; font-style: italic; color: #374151; background-color: #f0f9ff; /* sky-50 */ border-radius: 0 0.5rem 0.5rem 0; box-shadow: 2px 2px 5px rgba(0,0,0,0.05); }
+        .section-bg-light { background-color: #f0f9ff; /* sky-50 */ }
+        .section-bg-white { background-color: #FFFFFF; }
+        .instructional-text { font-size: 0.875rem; color: #4B5563; margin-top: 0.5rem; }
+        .output-box { margin-top: 1rem; padding: 0.75rem; background-color: #e0f2fe; /* sky-100 */ border: 1px solid #bae6fd; /* sky-200 */ border-radius: 0.375rem; font-size: 0.875rem; color: #0369a1; /* sky-700 */ text-align: center; font-weight: 500; min-height: 40px; }
+        .slider-label-container { display: flex; justify-content: space-between; font-size: 0.75rem; color: #6b7280; margin-top: 0.25rem; }
+        .interactive-block { margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1.5rem; border: 1px solid #e0f2fe; /* sky-100 */ border-radius: 0.5rem; background-color: #ffffff; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); }
+        .interactive-block-light { margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1.5rem; border: 1px solid #e0f2fe; /* sky-100 */ border-radius: 0.5rem; background-color: #f0f9ff; /* sky-50 */ box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); }
+        footer ul { list-style: none; padding-left: 0; }
+        footer li { margin-bottom: 0.75rem; }
+        footer a { color: #075985; /* sky-800 */ text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        .header-subtitle { font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; margin-top: 0.25rem; }
+        .header-attribution { font-size: 0.875rem; line-height: 1.25rem; margin-top: 0.5rem; opacity: 0.9; }
+        .footer-attribution { margin-top: 1.5rem; font-size: 0.875rem; line-height: 1.25rem; color: #6b7280; text-align: center; }
+        .plot-container { width: 100%; max-width: 550px; margin: 1rem auto; }
+        .plot-svg .axis path, .plot-svg .axis line { fill: none; stroke: #6b7280; shape-rendering: crispEdges; }
+        .plot-svg .axis text { font-size: 10px; fill: #4b5563; }
+        .plot-svg .line { fill: none; stroke-width: 2px; }
+        .plot-svg .solubility-line { stroke: #0ea5e9; } /* sky-500 */
+        .plot-svg .supersaturation-line { stroke: #f59e0b; /* amber-500 */ stroke-dasharray: 4,4; }
+        .plot-svg .current-point { fill: #ef4444; /* red-500 */ stroke: #ffffff; stroke-width: 1px;}
+        .plot-svg .zone-label { font-size: 10px; font-style: italic; fill: #6b7280; }
+        .plot-svg .axis-label { font-size: 11px; fill: #374151; text-anchor: middle; }
+        .nucleation-svg { display: block; margin: 1rem auto; width: 100%; max-width: 300px; height: 200px; border: 1px solid #bae6fd; background-color: #f0f9ff; border-radius: 0.25rem; }
+        .nucleation-svg .nucleus { fill: #7dd3fc; opacity: 0.7; } /* sky-300 */
+        .nucleation-svg .crystal { fill: #0369a1; opacity: 0.9; transition: r 0.3s ease; } /* sky-700 */
+        .crystallizer-diagram { display: flex; justify-content: center; align-items: center; background-color: #f0f9ff; border: 1px solid #bae6fd; padding: 1rem; border-radius: 0.5rem; min-height: 150px; }
+        .crystallizer-diagram div { text-align: center; margin: 0 1rem; }
+        .crystallizer-diagram .arrow { font-size: 1.5rem; color: #0ea5e9; margin: 0 0.5rem; }
+        .crystallizer-diagram .label { font-size: 0.8rem; color: #0369a1; margin-top: 0.25rem; }
+        .crystallizer-diagram .value { font-weight: 600; color: #0c4a6e; }
+        .tab-button { padding: 0.5rem 1rem; margin-right: 0.5rem; border: 1px solid #e0f2fe; border-bottom: none; background-color: #f0f9ff; color: #0369a1; border-radius: 0.375rem 0.375rem 0 0; cursor: pointer; transition: background-color 0.2s; font-weight: 500; }
+        .tab-button.active { background-color: #ffffff; border-color: #7dd3fc; color: #0c4a6e; font-weight: 600; }
+        .tab-content { border: 1px solid #7dd3fc; padding: 1.5rem; border-radius: 0 0.5rem 0.5rem 0.5rem; background-color: #ffffff; }
+        .tab-content > div:not(.active) { display: none; }
+        .placeholder-box { padding: 1rem; border: 1px dashed #7dd3fc; border-radius: 0.375rem; background-color: #f0f9ff; text-align: center; color: #075985; margin: 1.5rem 0; font-style: italic; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 antialiased">
+
+    <header class="bg-gradient-to-r from-sky-600 to-cyan-600 text-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <h1 class="text-2xl md:text-3xl font-bold">Cristal·lització Industrial</h1>
+            <p class="header-subtitle">Fonaments, Disseny i Balanços (Nivell Doctorat)</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+
+        <section id="objectius" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">6.1 Objectius de la Cristal·lització</h2>
+            <p>La cristal·lització és una operació bàsica de transferència simultània de matèria i calor, fonamental en la indústria química i farmacèutica. Els seus objectius principals són:</p>
+            <ul class="list-disc list-inside pl-4 mb-4">
+                <li><strong>Purificació:</strong> És un dels mètodes més efectius per obtenir substàncies sòlides amb alta puresa. Les impureses tendeixen a romandre en la dissolució mare (licor mare), mentre que el solut desitjat forma una estructura cristal·lina ordenada. L'obtenció de cristalls regulars i de mida uniforme és, sovint, garantia de puresa.</li>
+                <li><strong>Separació:</strong> Permet separar un component específic d'una mescla líquida (dissolució o fos) en forma sòlida.</li>
+                <li><strong>Obtenció de Producte Sòlid amb Propietats Específiques:</strong> Permet controlar la mida, la forma i l'estructura cristal·lina del producte sòlid, propietats crucials per al seu maneig posterior (filtració, assecat, emmagatzematge, fluïdesa) i la seva aplicació final (dissolució, biodisponibilitat en fàrmacs, propietats organolèptiques en aliments).</li>
+            </ul>
+            <blockquote>Un cristall es defineix com a matèria no viva altament organitzada, on els àtoms, ions o molècules es disposen formant xarxes cristal·lines tridimensionals i periòdiques.</blockquote>
+            <p>Exemples industrials a gran escala inclouen la producció de sucre (sacarosa) i sal comuna (NaCl), amb produccions mundials anuals de centenars de milions de tones.</p>
+        </section>
+
+        <section id="tipus-cristalitzadors" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light dynamic-content">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">6.2 Tipus de Cristal·litzadors i Equips</h2>
+            <p>L'elecció del cristal·litzador depèn de múltiples factors: les propietats del sistema (solubilitat, viscositat, tendència a incrustar), l'escala de producció, les especificacions del producte final (mida, puresa, forma cristal·lina) i consideracions econòmiques. Els cristal·litzadors es classifiquen generalment pel mètode de generació de sobresaturació i el mode d'operació.</p>
+
+            <h3>Classificació per Mètode de Generació de Sobresaturació:</h3>
+            <ul class="list-disc list-inside pl-4 mb-4">
+                <li><strong>Cristal·litzadors per Refredament:</strong> Ideals per a soluts la solubilitat dels quals disminueix significativament amb la temperatura (ex. KNO₃, KClO₃). Poden ser directes (contacte amb refrigerant) o indirectes (intercanviadors de calor).</li>
+                <li><strong>Cristal·litzadors per Evaporació:</strong> Usats quan la solubilitat varia poc amb la temperatura (ex. NaCl) o és inversa. S'elimina dissolvent per evaporació, augmentant la concentració del solut. Freqüentment operen al buit per reduir la temperatura d'ebullició (evaporació flaix adiabàtica).</li>
+                <li><strong>Cristal·litzadors per Refredament Evaporatiu (Buit):</strong> Combinen refredament i evaporació en operar a buit. Molt comuns industrialment.</li>
+                <li><strong>Cristal·litzadors per Addició d'Antidissolvent (Precipitació):</strong> S'afegeix un tercer component (antidissolvent) miscible amb el dissolvent però en el qual el solut és poc soluble, induint la precipitació/cristal·lització.</li>
+            </ul>
+
+            <h3>Classificació per Mode d'Operació:</h3>
+             <ul class="list-disc list-inside pl-4 mb-4">
+                 <li><strong>Cristal·litzadors Discontinus (Batch):</strong> Operen per cicles (càrrega, cristal·lització, descàrrega). Flexibles, adequats per a produccions petites o productes múltiples. Difícil control de CSD. Exemple: Tancs agitats amb camisa de refredament.</li>
+                 <li><strong>Cristal·litzadors Continus:</strong> Operen en estat estacionari. Major eficiència i millor control de CSD per a grans produccions. Requereixen control més precís.</li>
+             </ul>
+
+            <h3>Dissenys Comuns de Cristal·litzadors Continus:</h3>
+            <div class="interactive-block">
+                 <h4 class="text-lg font-semibold mb-3 text-center text-sky-700">Tipus Comuns de Cristal·litzadors Continus</h4>
+                 <div id="crystallizer-tabs" class="mb-4 border-b border-gray-300">
+                     <button class="tab-button active" onclick="showTab('msmpr')">MSMPR/FC</button>
+                     <button class="tab-button" onclick="showTab('dtb')">DTB</button>
+                     <button class="tab-button" onclick="showTab('oslo')">OSLO</button>
+                 </div>
+                 <div id="crystallizer-content" class="tab-content">
+                     <div id="msmpr" class="active">
+                         <h5 class="font-semibold text-sky-800 mb-2">MSMPR (Mixed Suspension, Mixed Product Removal) / Circulació Forçada (FC)</h5>
+                         <p class="text-sm">Tanc perfectament agitat on la suspensió de cristalls i el licor mare s'extreuen junts. Simple, robust, però amb control limitat de CSD a causa de la mescla total. La circulació forçada externa a través d'un intercanviador de calor permet controlar la temperatura i pot ajudar a reduir incrustacions.</p>
+                         <div class="text-center my-4"><svg width="200" height="150" viewBox="0 0 100 75"><rect x="10" y="10" width="80" height="55" rx="5" ry="5" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1"/><line x1="50" y1="10" x2="50" y2="40" stroke="#0369a1" stroke-width="1.5"/><polygon points="45,40 55,40 50,50" fill="#0369a1"/><text x="50" y="8" font-size="6" text-anchor="middle">Alim.</text><line x1="90" y1="37.5" x2="105" y2="37.5" stroke="#0369a1" stroke-width="1.5" marker-end="url(#arrowhead-simple-sky)"/><text x="93" y="33" font-size="6" text-anchor="start">Producte</text><defs><marker id="arrowhead-simple-sky" markerWidth="4" markerHeight="3" refX="0" refY="1.5" orient="auto"><polygon points="0 0, 4 1.5, 0 3" fill="#0369a1"/></marker></defs></svg></div>
+                     </div>
+                     <div id="dtb">
+                         <h5 class="font-semibold text-sky-800 mb-2">Draft Tube Baffle (DTB)</h5>
+                         <p class="text-sm">Incorpora un tub d'aspiració (draft tube) i un deflector (baffle) per promoure la circulació interna controlada i la classificació de cristalls per sedimentació a la zona anular. Permet l'eliminació selectiva de fins (destrucció o recirculació) per millorar la CSD. Comú en evaporació/refredament al buit.</p>
+                          <div class="text-center my-4"><svg width="200" height="150" viewBox="0 0 100 75"><rect x="10" y="10" width="80" height="55" rx="5" ry="5" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1"/><rect x="40" y="15" width="20" height="40" fill="none" stroke="#0369a1" stroke-width="1" stroke-dasharray="2,2"/><line x1="30" y1="55" x2="70" y2="55" stroke="#0369a1" stroke-width="1"/><text x="50" y="8" font-size="6" text-anchor="middle">Alim.</text><line x1="50" y1="10" x2="50" y2="25" stroke="#0369a1" stroke-width="1.5"/><line x1="90" y1="50" x2="105" y2="50" stroke="#0369a1" stroke-width="1.5" marker-end="url(#arrowhead-simple-sky)"/><text x="93" y="46" font-size="6" text-anchor="start">Cristalls</text><line x1="90" y1="25" x2="105" y2="25" stroke="#38bdf8" stroke-width="1" marker-end="url(#arrowhead-simple-sky)"/><text x="93" y="21" font-size="6" text-anchor="start">Fins</text></svg></div>
+                     </div>
+                      <div id="oslo">
+                         <h5 class="font-semibold text-sky-800 mb-2">OSLO (Krystal) / Llit Fluiditzat</h5>
+                         <p class="text-sm">La suspensió de cristalls es manté fluiditzada per un flux ascendent de licor mare sobresaturat. Els cristalls creixen en el llit fluiditzat i s'extreuen classificats per mida des del fons. Permet obtenir cristalls grans i uniformes. També conegut com a classificador de suspensió.</p>
+                          <div class="text-center my-4"><svg width="200" height="150" viewBox="0 0 100 75"><path d="M20 65 Q 20 40, 50 10 Q 80 40, 80 65 Z" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1"/><rect x="35" y="45" width="30" height="20" fill="#e0f2fe"/><text x="50" y="58" font-size="5" text-anchor="middle">Llit Fluiditzat</text><line x1="50" y1="65" x2="50" y2="75" stroke="#0369a1" stroke-width="1.5" marker-start="url(#arrowhead-simple-sky-rev)"/><text x="50" y="78" font-size="6" text-anchor="middle">Alim. Licor</text><line x1="80" y1="60" x2="95" y2="60" stroke="#0369a1" stroke-width="1.5" marker-end="url(#arrowhead-simple-sky)"/><text x="83" y="56" font-size="6" text-anchor="start">Cristalls</text><line x1="50" y1="10" x2="50" y2="0" stroke="#38bdf8" stroke-width="1" marker-end="url(#arrowhead-simple-sky)"/><text x="50" y="-2" font-size="6" text-anchor="middle">Licor Clar</text><defs><marker id="arrowhead-simple-sky-rev" markerWidth="4" markerHeight="3" refX="4" refY="1.5" orient="auto"><polygon points="4 0, 0 1.5, 4 3" fill="#0369a1"/></marker></defs></svg></div>
+                     </div>
+                 </div>
+            </div>
+        </section>
+
+        <section id="nucleacio-creixement" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">6.3 Nucleació i Creixement. Població de Cristalls.</h2>
+            <p>La cristal·lització ocorre en dues etapes fonamentals governades per la <strong>sobresaturació</strong> (\(\Delta C = C - C_{sat}\) o \(S = C / C_{sat}\)), que és la força impulsora del procés:</p>
+            <ol class="list-decimal list-inside pl-4 mb-4">
+                <li><strong>Nucleació:</strong> Formació de noves partícules sòlides (nuclis) estables a partir de la fase fluida sobresaturada.</li>
+                <li><strong>Creixement Cristal·lí:</strong> Augment de mida dels nuclis existents per addició de més solut des de la dissolució.</li>
+            </ol>
+            <p>Ambdós processos competeixen pel solut disponible i les seves velocitats relatives determinen la <strong>Distribució de Mida de Cristall (CSD)</strong> final.</p>
+
+            <h4>Nucleació</h4>
+            <p>És el naixement de nous cristalls. Es distingeix entre:</p>
+            <ul class="list-disc list-inside pl-4 mb-4">
+                <li><strong>Nucleació Primària:</strong> Ocorre en absència de cristalls de la mateixa substància.
+                    <ul class="list-circle list-inside pl-4 mt-2">
+                        <li><em>Homogènia:</em> Formació espontània de nuclis a partir de fluctuacions en la dissolució. Requereix alts nivells de sobresaturació. Energèticament desfavorable a causa de l'alta energia interfacial.</li>
+                        <li><em>Heterogènia:</em> Formació de nuclis sobre superfícies estranyes (parets de l'equip, partícules de pols, impureses). Requereix menor sobresaturació que l'homogènia, ja que la superfície estranya redueix la barrera energètica interfacial. És el mecanisme dominant a la indústria.</li>
+                    </ul>
+                </li>
+                 <li><strong>Nucleació Secundària:</strong> Ocorre només en presència de cristalls preexistents de la mateixa substància. És el mecanisme més important en cristal·litzadors industrials continus. Pot ser induïda per:
+                     <ul class="list-circle list-inside pl-4 mt-2">
+                         <li><em>Contacte:</em> Col·lisions cristall-cristall, cristall-agitador, cristall-paret. Genera fragments microscòpics que actuen com a nous nuclis. És la font principal en sistemes agitats.</li>
+                         <li><em>Fluidodinàmica (Shear):</em> El flux del fluid al voltant del cristall pot desprendre petits agregats o induir la formació de nuclis.</li>
+                     </ul>
+                 </li>
+            </ul>
+            <p>La velocitat de nucleació (\(B\)) depèn fortament de la sobresaturació (\(B \propto \Delta C^b\), on \(b\) és l'ordre de nucleació, típicament > 1), temperatura, nivell d'agitació, presència d'impureses i superfície cristal·lina existent (per a la secundària).</p>
+
+            <h4>Creixement Cristal·lí</h4>
+            <p>És el procés pel qual els nuclis augmenten de mida. Implica diversos passos:</p>
+            <ol class="list-decimal list-inside pl-4 mb-4">
+                <li>Transport del solut des del si de la dissolució fins a la superfície del cristall (difusió externa).</li>
+                <li>Adsorció del solut a la superfície cristal·lina.</li>
+                <li>Integració del solut a la xarxa cristal·lina (reacció superficial).</li>
+                <li>Difusió del dissolvent o calor de cristal·lització lluny de la superfície.</li>
+            </ol>
+            <p>La velocitat de creixement (\(G = dL/dt\)) depèn de la sobresaturació (\(G \propto \Delta C^g\), on \(g\) és l'ordre de creixement, sovint proper a 1 o 2), temperatura, viscositat, hidrodinàmica, presència d'impureses (que poden adsorbir-se i inhibir el creixement) i la cara cristal·lina específica.</p>
+
+            <h4>Població de Cristalls i CSD</h4>
+            <p>El resultat final de la nucleació i el creixement simultanis és una població de cristalls amb diferents mides. La Distribució de Mida de Cristall (CSD) descriu com es distribueix la massa o el nombre de cristalls en funció de la seva mida característica (L). És una propietat crucial del producte.</p>
+            <p>Controlar la CSD requereix manejar les velocitats relatives de nucleació (B) i creixement (G). Altes taxes de nucleació respecte al creixement produeixen molts cristalls petits. Altes taxes de creixement respecte a la nucleació produeixen menys cristalls però més grans.</p>
+            <p>Els Balanços de Població (PBE) són equacions matemàtiques que descriuen l'evolució de la CSD en el temps i/o espai, considerant la nucleació, el creixement, l'aglomeració i el trencament de cristalls, així com l'entrada i sortida de partícules del sistema. Són eines fonamentals per al disseny i control avançat de cristal·litzadors.</p>
+
+             <div class="interactive-block-light">
+                 <h4 class="text-lg font-semibold mb-3 text-center text-sky-700">Simulador Conceptual Nucleació vs. Creixement</h4>
+                 <p class="instructional-text text-center mb-4">Ajusta els paràmetres per visualitzar conceptualment el balanç entre nucleació i creixement.</p>
+                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                     <div>
+                         <label for="nucl-supersat-slider">Sobresaturació (\(\Delta C\)):</label>
+                         <input type="range" id="nucl-supersat-slider" min="1" max="100" value="50" step="1">
+                         <div class="slider-label-container"><span>Baixa</span><span id="nucl-supersat-value">50</span><span>Alta</span></div>
+                     </div>
+                     <div>
+                         <label for="nucl-temp-slider">Temperatura (Conceptual):</label>
+                         <input type="range" id="nucl-temp-slider" min="0" max="100" value="50" step="1">
+                         <div class="slider-label-container"><span>Baixa</span><span id="nucl-temp-value">50</span><span>Alta</span></div>
+                     </div>
+                     <div>
+                         <label for="nucl-agitation-slider">Agitació/Impureses:</label>
+                         <input type="range" id="nucl-agitation-slider" min="0" max="100" value="30" step="1">
+                         <div class="slider-label-container"><span>Baixa</span><span id="nucl-agitation-value">30</span><span>Alta</span></div>
+                     </div>
+                 </div>
+                 <div class="nucleation-svg-container text-center mb-4">
+                     <svg id="nucleation-svg" class="nucleation-svg"></svg>
+                 </div>
+                 <div id="nucleation-output" class="output-box">Procés: Mixt. CSD: Moderada.</div>
+             </div>
+        </section>
+
+        <section id="corbes-solubilitat" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">6.4 Corbes de Solubilitat i Sobresaturació</h2>
+            <p>La <strong>solubilitat</strong> (\(C_{sat}\) o \(x_{sat}\)) és la concentració màxima de solut que pot dissoldre's en un dissolvent a una temperatura i pressió donades per formar una dissolució saturada en equilibri amb la fase sòlida. S'expressa comunament com a massa de solut per massa de dissolvent (ex. g solut / 100 g dissolvent), fracció màssica, o concentració molar.</p>
+            <p>La <strong>corba de solubilitat</strong> representa gràficament la solubilitat en funció de la temperatura. La seva forma és crucial per triar el mètode de cristal·lització:</p>
+            <ul class="list-disc list-inside pl-4 mb-4">
+                <li>Pendent positiu pronunciat (ex. KClO₃): El refredament és efectiu per generar sobresaturació.</li>
+                <li>Pendent quasi pla (ex. NaCl): La solubilitat canvia poc amb T. Es requereix evaporació del dissolvent.</li>
+                <li>Pendent negatiu (ex. Na₂SO₄ en cert rang de T): La solubilitat disminueix en augmentar T. L'escalfament pot induir cristal·lització (poc comú).</li>
+                <li>Corbes discontínues: Indiquen canvis en la forma cristal·lina (ex. hidrats diferents) a certes temperatures (punts de transició).</li>
+            </ul>
+            <p>La <strong>sobresaturació</strong> és la condició necessària perquè ocorrin la nucleació i el creixement. És l'estat en què la concentració actual del solut (\(C\)) excedeix la concentració de saturació (\(C_{sat}\)) a aquesta temperatura. Es quantifica com:</p>
+            <ul class="list-disc list-inside pl-4 mb-4">
+                <li>Diferència de concentració: \(\Delta C = C - C_{sat}\)</li>
+                <li>Ràtio de sobresaturació: \(S = C / C_{sat}\)</li>
+                <li>Sobresaturació relativa: \(\sigma = (C - C_{sat}) / C_{sat} = S - 1\)</li>
+            </ul>
+            <p>Entre la corba de solubilitat i la corba on la nucleació espontània (primària) ocorre ràpidament (corba de sobresaturació o límit metaestable superior), existeix la <strong>Zona Metaestable</strong>. Dins d'aquesta zona:</p>
+            <ul class="list-disc list-inside pl-4 mb-4">
+                <li>La dissolució està sobresaturada, però la nucleació primària espontània és molt lenta o inexistent.</li>
+                <li>El creixement de cristalls ja existents (sembrats o generats per nucleació secundària) és el procés dominant.</li>
+                <li>Operar dins de la zona metaestable permet obtenir cristalls més grans i uniformes.</li>
+            </ul>
+            <p>L'amplada de la zona metaestable (MSZW) no és una propietat termodinàmica fixa, sinó que depèn de factors cinètics com la velocitat de refredament/evaporació, agitació, presència d'impureses o sembra de cristalls. Una MSZW més estreta implica que la nucleació ocorre a nivells de sobresaturació més baixos.</p>
+
+            <div class="interactive-block-light">
+                 <h4 class="text-lg font-semibold mb-3 text-center text-sky-700">Explorador de Corba de Solubilitat i Zones</h4>
+                 <p class="instructional-text text-center mb-4">Ajusta la temperatura i concentració per visualitzar les zones de cristal·lització.</p>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                     <div>
+                         <label for="solub-temp-slider">Temperatura (°C): <span id="solub-temp-value">40</span></label>
+                         <input type="range" id="solub-temp-slider" min="0" max="100" value="40" step="1">
+                     </div>
+                     <div>
+                         <label for="solub-conc-slider">Concentració (g solut / 100g solv.): <span id="solub-conc-value">30</span></label>
+                         <input type="range" id="solub-conc-slider" min="0" max="80" value="30" step="1">
+                     </div>
+                 </div>
+                  <div id="solubility-plot-container" class="plot-container bg-white rounded shadow-inner p-2">
+                     <svg id="solubility-plot-svg" class="plot-svg" width="500" height="350"></svg>
+                 </div>
+                 <div id="solubility-output" class="output-box">Zona: Estable (No Saturada). ΔC = -5.0 g/100g</div>
+            </div>
+        </section>
+
+        <section id="rendiment" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">6.5 Rendiment i Eficàcia de Cristal·lització</h2>
+            <p>El <strong>rendiment</strong> d'una operació de cristal·lització quantifica la quantitat de solut que s'ha recuperat en forma cristal·lina respecte a la quantitat inicial en l'alimentació. És un paràmetre clau per avaluar l'eficiència del procés de separació.</p>
+            <p>Es defineix l'<strong>Eficàcia de Cristal·lització</strong> (o rendiment percentual) com:</p>
+            $$ \text{Eficàcia (%) } = \frac{\text{massa de solut anhidre cristal·litzat}}{\text{massa de solut inicial a l'alimentació}} \times 100 $$
+            <p>Per calcular la massa de solut cristal·litzat, es realitzen balanços de matèria (vegeu secció 6.6.3). El rendiment màxim teòric està limitat per la solubilitat del solut en el licor mare a la temperatura final de cristal·lització. Factors com l'evaporació del dissolvent, la formació d'hidrats (que incorporen aigua a la fase sòlida) i les pèrdues en etapes posteriors (filtració, rentat) afecten el rendiment real.</p>
+            <p>Un alt rendiment és desitjable per maximitzar la recuperació del producte, però de vegades s'ha d'equilibrar amb l'obtenció de la puresa i CSD desitjades. Operar amb sobresaturacions molt altes per maximitzar el rendiment pot conduir a nucleació excessiva i cristalls petits o impurs.</p>
+        </section>
+
+        <section id="calcul" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light dynamic-content">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">6.6 Càlcul d’un Cristal·litzador</h2>
+            <p>El disseny i dimensionament d'un cristal·litzador requereix l'ús de diagrames d'equilibri (fases, entalpia-concentració) i l'aplicació rigorosa de balanços de matèria i energia.</p>
+
+            <h3 class="text-xl font-semibold">6.6.1 Diagrama de Fases</h3>
+            <p>Els diagrames de fases T-composició (Temperatura vs. Concentració) són eines essencials per visualitzar les relacions d'equilibri entre les fases sòlida i líquida. Permeten determinar:</p>
+            <ul class="list-disc list-inside pl-4 mb-4">
+                <li>La corba de solubilitat del solut.</li>
+                <li>La composició i temperatura del punt eutèctic (per a sistemes binaris simples), on coexisteixen dos sòlids i líquid saturat.</li>
+                <li>La formació de compostos (ex. hidrats, solvats) amb els seus propis camps d'estabilitat i punts de fusió congruent o incongruent.</li>
+                <li>L'existència de solucions sòlides, on un component es dissol en la xarxa cristal·lina de l'altre.</li>
+            </ul>
+             <p class="my-6 p-4 border border-dashed border-gray-300 rounded bg-white text-center text-gray-600 italic">
+                 Referència a Figures PPT: Diagrames de fases (Benzè-Naftalè, MgSO₄–H₂O, Mn(NO₃)₂–H₂O, NaCl–H₂O, Naftalè-β-Naftol, Naftalè-β-Naftilamina).
+            </p>
+            <p>La <strong>Regla de la Palanca (Lever Rule)</strong> s'aplica a diagrames de fases binaris per determinar les quantitats relatives de dues fases en equilibri en una regió bifàsica. Si un sistema de composició global \(x_F\) a una temperatura donada se separa en una fase líquida de composició \(x_M\) i una fase sòlida de composició \(x_C\), les fraccions màssiques de sòlid (\(w_C\)) i líquid (\(w_M\)) són:</p>
+            $$ w_C = \frac{x_F - x_M}{x_C - x_M}, \quad w_M = \frac{x_C - x_F}{x_C - x_M} $$
+            <p>Això és equivalent a dir que la massa d'una fase multiplicada per la "longitud del seu braç de palanca" (distància en el diagrama des de la composició global fins a la composició de l'altra fase) és igual a la massa de l'altra fase multiplicada per la longitud del seu propi braç de palanca: \( M \cdot (x_F - x_M) = C \cdot (x_C - x_F) \).</p>
+
+            <h3 class="text-xl font-semibold">6.6.2 Diagrama d’Entalpia-Concentració</h3>
+            <p>Aquests diagrames (ex. per a MgSO₄-H₂O) representen l'entalpia específica (entalpia per unitat de massa total) de la mescla en funció de la concentració màssica del solut, a pressió constant. Inclouen línies per a:</p>
+            <ul class="list-disc list-inside pl-4 mb-4">
+                <li>Dissolucions no saturades (líquid monofàsic).</li>
+                <li>Dissolucions saturades (líquid en equilibri amb sòlid).</li>
+                <li>Mescles bifàsiques (líquid + sòlid) dins les regions de saturació. Les línies d'unió (tie-lines) connecten les composicions de les fases en equilibri a una temperatura donada.</li>
+                <li>Entalpies dels sòlids purs (solut anhidre, hidrats, gel).</li>
+            </ul>
+             <p class="my-6 p-4 border border-dashed border-gray-300 rounded bg-white text-center text-gray-600 italic">
+                 Referència a Figura PPT: Diagrama Entalpia-Concentració (MgSO₄–H₂O).
+            </p>
+            <p>Són fonamentals per als balanços d'energia, ja que permeten determinar directament l'entalpia dels corrents d'entrada i sortida del cristal·litzador si es coneixen la seva temperatura i composició.</p>
+
+            <h3 class="text-xl font-semibold">6.6.3 Balanços de Matèria i Energia</h3>
+            <p>Per a un cristal·litzador continu operant en estat estacionari:</p>
+            <p><strong>Balanç Global de Matèria:</strong></p>
+            $$ F = M + V + C $$
+            <p>on \(F\) és el cabal màssic d'alimentació, \(M\) el de licor mare, \(V\) el de vapor (si hi ha evaporació) i \(C\) el de cristalls.</p>
+            <p><strong>Balanç de Matèria per al Solut:</strong></p>
+            $$ F \cdot x_F = M \cdot x_M + C \cdot x_C (+ V \cdot x_V \text{ si el vapor conté solut}) $$
+            <p>on \(x\) representa la fracció màssica del solut en cada corrent. Normalment \(x_V = 0\). La concentració del licor mare (\(x_M\)) sol ser la concentració de saturació a la temperatura de sortida (\(x_{sat}(T_{sortida})\)). La composició dels cristalls (\(x_C\)) depèn de si són anhidres (\(x_C = 1\)) o hidrats (ex. \(x_C = \frac{PM_{solut}}{PM_{hidrat}}\)).</p>
+
+            <div class="interactive-block">
+                 <h4 class="text-lg font-semibold mb-3 text-center text-sky-700">Calculadora de Balanç de Matèria (Refredament Simple)</h4>
+                 <p class="instructional-text text-center mb-4">Estima la producció de cristalls i el rendiment per a un cristal·litzador per refredament simple (sense evaporació).</p>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                     <div>
+                         <label for="mass-F-slider">Alimentació (F, kg): <span id="mass-F-value">1000</span></label>
+                         <input type="range" id="mass-F-slider" min="100" max="10000" value="1000" step="100">
+                     </div>
+                     <div>
+                         <label for="mass-xF-slider">Conc. Alim. (xF, % pes): <span id="mass-xF-value">40</span></label>
+                         <input type="range" id="mass-xF-slider" min="10" max="60" value="40" step="1">
+                     </div>
+                     <div>
+                         <label for="mass-xM-slider">Solubilitat Final (xM, % pes): <span id="mass-xM-value">20</span></label>
+                         <input type="range" id="mass-xM-slider" min="5" max="35" value="20" step="1">
+                     </div>
+                     <div>
+                         <label for="mass-xC-input">Conc. Cristal (xC, % pes solut):</label>
+                         <input type="number" id="mass-xC-input" value="100" step="1" min="10" max="100" class="w-full">
+                         <p class="instructional-text text-xs">Per hidrats, posa % solut anhidre.</p>
+                     </div>
+                 </div>
+                 <div id="mass-balance-output" class="output-box">Cristalls (C): 250.0 kg | Licor Mare (M): 750.0 kg | Eficàcia: 62.5%</div>
+            </div>
+
+            <p><strong>Balanç d'Energia (Entalpia):</strong></p>
+            $$ F \cdot H_F + Q_{in} = M \cdot H_M + V \cdot H_V + C \cdot H_C + Q_{out} + W_s $$
+            <p>on \(H\) és l'entalpia específica de cada corrent (obtinguda del diagrama H-x o calculada), \(Q_{in}\) és la calor afegida, \(Q_{out}\) és la calor retirada (ex. per refredament), i \(W_s\) és el treball de l'agitador (sovint menyspreable). Per a un cristal·litzador adiabàtic per evaporació flaix (buit), \(Q_{in} = Q_{out} = W_s = 0\). La calor retirada (\(Q_{out}\)) en un cristal·litzador per refredament ha d'incloure la calor sensible i la calor latent de cristal·lització (\(\Delta H_{crist}\)).</p>
+
+            <div class="interactive-block">
+                 <h4 class="text-lg font-semibold mb-3 text-center text-sky-700">Visualitzador Conceptual Balanç d'Energia (Refredament)</h4>
+                 <p class="instructional-text text-center mb-4">Ajusta els paràmetres per estimar conceptualment la càrrega de refredament requerida.</p>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                     <div>
+                         <label for="energy-F-slider">Cabal Alimentació (F, conceptual):</label>
+                         <input type="range" id="energy-F-slider" min="10" max="100" value="50" step="1">
+                         <div class="slider-label-container"><span>Baix</span><span id="energy-F-value">50</span><span>Alt</span></div>
+                     </div>
+                     <div>
+                         <label for="energy-Tin-slider">Temp. Alimentació (Tin, °C):</label>
+                         <input type="range" id="energy-Tin-slider" min="30" max="90" value="60" step="1">
+                         <div class="slider-label-container"><span>30</span><span id="energy-Tin-value">60</span><span>90</span></div>
+                     </div>
+                     <div>
+                         <label for="energy-Tout-slider">Temp. Cristalls (Tout, °C):</label>
+                         <input type="range" id="energy-Tout-slider" min="0" max="40" value="20" step="1">
+                         <div class="slider-label-container"><span>0</span><span id="energy-Tout-value">20</span><span>40</span></div>
+                     </div>
+                     <div>
+                         <label for="energy-Hcryst-slider">Calor Cristal·lització (\(\Delta H_{crist}\), conceptual):</label>
+                         <input type="range" id="energy-Hcryst-slider" min="10" max="100" value="50" step="1">
+                         <div class="slider-label-container"><span>Baix</span><span id="energy-Hcryst-value">50</span><span>Alt</span></div>
+                     </div>
+                 </div>
+                 <div class="crystallizer-diagram">
+                     <div>
+                         <span class="label">Alimentació (F, Tin)</span>
+                         <div class="value" id="energy-feed-display">50 @ 60°C</div>
+                     </div>
+                     <div class="arrow">➔</div>
+                     <div>
+                         <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="text-sky-600"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><path d="M12 16V8"></path><path d="m15 13-3-3-3 3"></path></svg>
+                         <span class="label">Cristal·litzador</span>
+                         <div class="value text-red-600" id="energy-qout-display">Q<sub>retirada</sub> ≈ 3000</div>
+                     </div>
+                     <div class="arrow">➔</div>
+                      <div>
+                         <span class="label">Cristalls (C, Tout)</span>
+                         <div class="value" id="energy-crystal-display">~20 @ 20°C</div>
+                         <span class="label mt-2">Licor (M, Tout)</span>
+                         <div class="value" id="energy-liquor-display">~30 @ 20°C</div>
+                     </div>
+                 </div>
+                 <div id="energy-balance-output" class="output-box">Càrrega de Refredament (Qout) estimada: Mitjana-Alta</div>
+            </div>
+        </section>
+
+        <section id="aplicacions" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">6.7 Aplicacions Industrials</h2>
+            <p>La cristal·lització és una operació unitària ubiqua en nombroses indústries:</p>
+            <ul class="list-disc list-inside pl-4 mb-4">
+                <li><strong>Indústria Alimentària:</strong> Producció de sucre (sacarosa), sal (NaCl), lactosa, àcid cítric, glutamat monosòdic, edulcorants (xilitol). Controlar la mida del cristall és clau per a la textura i la solubilitat.</li>
+                <li><strong>Indústria Farmacèutica:</strong> Purificació d'Ingredients Farmacèutics Actius (APIs), control de polimorfisme (diferents formes cristal·lines amb distinta biodisponibilitat), producció d'excipients. La CSD i la forma cristal·lina són crítiques.</li>
+                <li><strong>Indústria Química i Petroquímica:</strong> Producció de sals inorgàniques (sulfat d'amoni, nitrat de potassi, carbonat de sodi), àcids orgànics (adípic, tereftàlic), separació d'isòmers (p-xilè), purificació de productes intermedis.</li>
+                <li><strong>Tractament d'Aigües i Efluents:</strong> Recuperació de sals valuoses (ex. sulfat de sodi d'efluents de viscosa), eliminació de sals per reduir la salinitat.</li>
+                <li><strong>Mineria i Metal·lúrgia:</strong> Recuperació de sals metàl·liques (sulfat de coure, níquel), purificació d'alúmina.</li>
+                <li><strong>Bioprocessos:</strong> Cristal·lització de proteïnes, aminoàcids i altres productes biotecnològics per a purificació i formulació.</li>
+            </ul>
+            <p>El disseny i operació òptims del procés de cristal·lització són essencials per obtenir productes amb la qualitat requerida i assegurar l'eficiència econòmica del procés global.</p>
+        </section>
+
+    </main>
+
+     <footer class="mt-16 pt-8 border-t border-gray-300 text-sm text-gray-600">
+         <p class="footer-attribution">Curs de Cristal·lització Industrial (Nivell Doctorat)</p>
+         <p class="footer-attribution">Basat en material acadèmic i coneixement general d'enginyeria química.</p>
+     </footer>
+
+    <script>
+        const sections_cryst_all = document.querySelectorAll('.fade-in-section');
+        const observerOptions_cryst_all = { root: null, rootMargin: '0px', threshold: 0.1 };
+        const observerCallback_cryst_all = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-section');
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
+        const observer_cryst_all = new IntersectionObserver(observerCallback_cryst_all, observerOptions_cryst_all);
+        sections_cryst_all.forEach(section => { observer_cryst_all.observe(section); });
+
+        const crystTabButtons = document.querySelectorAll('#crystallizer-tabs .tab-button');
+        const crystTabContents = document.querySelectorAll('#crystallizer-content > div');
+
+        function showTab(tabId) {
+            crystTabContents.forEach(content => {
+                const isActive = content.id === tabId;
+                content.classList.toggle('active', isActive);
+                content.style.display = isActive ? 'block' : 'none';
+            });
+            crystTabButtons.forEach(button => {
+                button.classList.toggle('active', button.getAttribute('onclick').includes(`'${tabId}'`));
+            });
+        }
+        if (crystTabButtons.length > 0) {
+            crystTabButtons.forEach(button => button.addEventListener('click', () => showTab(button.getAttribute('onclick').match(/'([^']+)'/)[1])));
+            if(crystTabContents.length > 0) showTab(crystTabContents[0].id);
+        }
+
+        const solubTempSlider = document.getElementById('solub-temp-slider');
+        const solubConcSlider = document.getElementById('solub-conc-slider');
+        const solubTempValue = document.getElementById('solub-temp-value');
+        const solubConcValue = document.getElementById('solub-conc-value');
+        const solubilityPlotSvg = d3.select("#solubility-plot-svg");
+        const solubilityOutput = document.getElementById('solubility-output');
+
+        function solubilityCurve(T) { return 10 + 0.5 * T; }
+        function supersaturationCurve(T) { return 15 + 0.55 * T; }
+
+        function renderSolubilityPlot() {
+            if (!solubTempSlider || !solubConcSlider || !solubTempValue || !solubConcValue || solubilityPlotSvg.empty() || !solubilityOutput) return;
+            const T = parseFloat(solubTempSlider.value);
+            const C = parseFloat(solubConcSlider.value);
+            solubTempValue.textContent = T.toFixed(0);
+            solubConcValue.textContent = C.toFixed(0);
+
+            const svgNode = solubilityPlotSvg.node();
+            if (!svgNode) return;
+            const width = svgNode.getBoundingClientRect().width || 500;
+            const height = 350;
+            const margin = {top: 20, right: 20, bottom: 40, left: 50};
+            const plotWidth = width - margin.left - margin.right;
+            const plotHeight = height - margin.top - margin.bottom;
+
+            solubilityPlotSvg.selectAll("*").remove();
+            const g = solubilityPlotSvg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+            const Tmin = 0, Tmax = 100, Cmin = 0, Cmax = 80;
+            const xScale = d3.scaleLinear().domain([Tmin, Tmax]).range([0, plotWidth]);
+            const yScale = d3.scaleLinear().domain([Cmin, Cmax]).range([plotHeight, 0]);
+
+            const xAxis = d3.axisBottom(xScale);
+            const yAxis = d3.axisLeft(yScale);
+            g.append("g").attr("transform", `translate(0,${plotHeight})`).call(xAxis);
+            g.append("g").call(yAxis);
+            g.append("text").attr("transform", `translate(${plotWidth / 2}, ${plotHeight + margin.bottom - 5})`).attr("class", "axis-label").text("Temperatura (°C)");
+            g.append("text").attr("transform", "rotate(-90)").attr("y", 0 - margin.left).attr("x", 0 - (plotHeight / 2)).attr("dy", "1em").attr("class", "axis-label").text("Concentració (g/100g solv.)");
+
+            const lineData = d3.range(Tmin, Tmax + 1, 1).map(t => ({temp: t, sat: solubilityCurve(t), supersat: supersaturationCurve(t)}));
+            const solLine = d3.line().x(d => xScale(d.temp)).y(d => yScale(d.sat));
+            const supersatLine = d3.line().x(d => xScale(d.temp)).y(d => yScale(d.supersat));
+
+            g.append("path").datum(lineData).attr("class", "line solubility-line").attr("d", solLine);
+            g.append("path").datum(lineData).attr("class", "line supersaturation-line").attr("d", supersatLine);
+
+            g.append("text").attr("x", xScale(80)).attr("y", yScale(solubilityCurve(80)) - 5).attr("class", "plot-svg zone-label").text("Solubilitat").style("fill", "#0ea5e9");
+            g.append("text").attr("x", xScale(80)).attr("y", yScale(supersaturationCurve(80)) - 5).attr("class", "plot-svg zone-label").text("Sobresaturació").style("fill", "#f59e0b");
+
+            const currentX = xScale(T);
+            const currentY = yScale(C);
+            const satC = solubilityCurve(T);
+            const supersatC = supersaturationCurve(T);
+            let zone = "";
+            let deltaC = C - satC;
+
+            if (C < satC) { zone = "Estable (No Saturada)"; }
+            else if (C >= satC && C < supersatC) { zone = "Metaestable (Creixement)"; }
+            else { zone = "Làbil (Nucleació)"; }
+
+            g.append("circle").attr("cx", currentX).attr("cy", currentY).attr("r", 5).attr("class", "current-point");
+            g.append("text").attr("x", currentX + 8).attr("y", currentY + 4).attr("class", "plot-svg zone-label").style("font-weight", "bold").text(`(${T.toFixed(0)}°C, ${C.toFixed(0)}g)`);
+
+            solubilityOutput.textContent = `Zona: ${zone}. ΔC = ${deltaC.toFixed(1)} g/100g`;
+        }
+
+        if (solubTempSlider && solubConcSlider) {
+            solubTempSlider.addEventListener('input', renderSolubilityPlot);
+            solubConcSlider.addEventListener('input', renderSolubilityPlot);
+            window.addEventListener('load', renderSolubilityPlot);
+        }
+
+        const nuclSupersatSlider = document.getElementById('nucl-supersat-slider');
+        const nuclSupersatValue = document.getElementById('nucl-supersat-value');
+        const nuclTempSlider = document.getElementById('nucl-temp-slider');
+        const nuclTempValue = document.getElementById('nucl-temp-value');
+        const nuclAgitationSlider = document.getElementById('nucl-agitation-slider');
+        const nuclAgitationValue = document.getElementById('nucl-agitation-value');
+        const nucleationSvg = d3.select("#nucleation-svg");
+        const nucleationOutput = document.getElementById('nucleation-output');
+
+        function updateNucleationVisual() {
+            if(!nuclSupersatSlider || !nuclTempSlider || !nuclAgitationSlider || nucleationSvg.empty() || !nucleationOutput) return;
+            const supersat = parseInt(nuclSupersatSlider.value);
+            const temp = parseInt(nuclTempSlider.value);
+            const agitation = parseInt(nuclAgitationSlider.value);
+            if(nuclSupersatValue) nuclSupersatValue.textContent = supersat;
+            if(nuclTempValue) nuclTempValue.textContent = temp;
+            if(nuclAgitationValue) nuclAgitationValue.textContent = agitation;
+
+            const nucleationRate = Math.pow(Math.max(0, supersat - 10) / 90, 3) * (1 + agitation / 50) * Math.exp(-temp / 50);
+            const growthRate = (supersat / 100) * Math.exp(temp / 100) * (1 - agitation / 200);
+
+            nucleationSvg.selectAll("*").remove();
+            const numNuclei = Math.min(50, Math.max(1, Math.round(nucleationRate * 100)));
+            const meanRadius = Math.max(1, Math.min(15, growthRate * 20));
+
+            for (let i = 0; i < numNuclei; i++) {
+                const r = Math.random() * meanRadius * 0.5 + meanRadius * 0.5;
+                nucleationSvg.append("circle")
+                    .attr("cx", Math.random() * 280 + 10)
+                    .attr("cy", Math.random() * 180 + 10)
+                    .attr("r", r)
+                    .attr("class", r < 3 ? "nucleus" : "crystal");
+            }
+
+            let dominantProcess = "Mixt";
+            if (nucleationRate > growthRate * 2) dominantProcess = "Nucleació Dominant";
+            else if (growthRate > nucleationRate * 2) dominantProcess = "Creixement Dominant";
+            let csdTrend = "Moderada";
+            if (nucleationRate > growthRate * 1.5) csdTrend = "Fina";
+            else if (growthRate > nucleationRate * 1.5) csdTrend = "Grossa";
+            nucleationOutput.textContent = `Procés: ${dominantProcess}. CSD: ${csdTrend}.`;
+        }
+
+        if (nuclSupersatSlider && nuclTempSlider && nuclAgitationSlider) {
+            nuclSupersatSlider.addEventListener('input', updateNucleationVisual);
+            nuclTempSlider.addEventListener('input', updateNucleationVisual);
+            nuclAgitationSlider.addEventListener('input', updateNucleationVisual);
+            window.addEventListener('load', updateNucleationVisual);
+        }
+
+        const massFSlider = document.getElementById('mass-F-slider');
+        const massFValue = document.getElementById('mass-F-value');
+        const massxFSlider = document.getElementById('mass-xF-slider');
+        const massxFValue = document.getElementById('mass-xF-value');
+        const massxMSlider = document.getElementById('mass-xM-slider');
+        const massxMValue = document.getElementById('mass-xM-value');
+        const massxCInput = document.getElementById('mass-xC-input');
+        const massBalanceOutput = document.getElementById('mass-balance-output');
+
+        function updateMassBalance() {
+            if(!massFSlider || !massxFSlider || !massxMSlider || !massxCInput || !massBalanceOutput) return;
+            const F = parseFloat(massFSlider.value);
+            const xF = parseFloat(massxFSlider.value) / 100;
+            const xM = parseFloat(massxMSlider.value) / 100;
+            const xC = parseFloat(massxCInput.value) / 100;
+
+            if(massFValue) massFValue.textContent = F.toFixed(0);
+            if(massxFValue) massxFValue.textContent = (xF * 100).toFixed(0);
+            if(massxMValue) massxMValue.textContent = (xM * 100).toFixed(0);
+
+            let C = 0, M = 0, efficacy = 0;
+            if (xC > xM && xF >= xM) {
+                 C = F * (xF - xM) / (xC - xM);
+                 M = F - C;
+                 if (F * xF > 1e-6) {
+                     efficacy = (C * xC) / (F * xF) * 100;
+                 }
+            } else {
+                M = F;
+            }
+            C = Math.max(0, C);
+            M = Math.max(0, M);
+            efficacy = Math.max(0, Math.min(100, efficacy));
+
+            massBalanceOutput.textContent = `Cristalls (C): ${C.toFixed(1)} kg | Licor Mare (M): ${M.toFixed(1)} kg | Eficàcia: ${efficacy.toFixed(1)}%`;
+        }
+
+        if(massFSlider && massxFSlider && massxMSlider && massxCInput) {
+            massFSlider.addEventListener('input', updateMassBalance);
+            massxFSlider.addEventListener('input', updateMassBalance);
+            massxMSlider.addEventListener('input', updateMassBalance);
+            massxCInput.addEventListener('input', updateMassBalance);
+            window.addEventListener('load', updateMassBalance);
+        }
+
+        const energyFSlider = document.getElementById('energy-F-slider');
+        const energyFValue = document.getElementById('energy-F-value');
+        const energyTinSlider = document.getElementById('energy-Tin-slider');
+        const energyTinValue = document.getElementById('energy-Tin-value');
+        const energyToutSlider = document.getElementById('energy-Tout-slider');
+        const energyToutValue = document.getElementById('energy-Tout-value');
+        const energyHcrystSlider = document.getElementById('energy-Hcryst-slider');
+        const energyHcrystValue = document.getElementById('energy-Hcryst-value');
+        const energyFeedDisplay = document.getElementById('energy-feed-display');
+        const energyCrystalDisplay = document.getElementById('energy-crystal-display');
+        const energyLiquorDisplay = document.getElementById('energy-liquor-display');
+        const energyQoutDisplay = document.getElementById('energy-qout-display');
+        const energyBalanceOutput = document.getElementById('energy-balance-output');
+
+        function updateEnergyBalance() {
+            if(!energyFSlider || !energyTinSlider || !energyToutSlider || !energyHcrystSlider || !energyBalanceOutput ||
+               !energyFeedDisplay || !energyCrystalDisplay || !energyLiquorDisplay || !energyQoutDisplay) return;
+
+            const F_rel = parseFloat(energyFSlider.value);
+            const Tin = parseFloat(energyTinSlider.value);
+            const Tout = parseFloat(energyToutSlider.value);
+            const Hcryst_rel = parseFloat(energyHcrystSlider.value);
+
+            if(energyFValue) energyFValue.textContent = F_rel.toFixed(0);
+            if(energyTinValue) energyTinValue.textContent = Tin.toFixed(0);
+            if(energyToutValue) energyToutValue.textContent = Tout.toFixed(0);
+            if(energyHcrystValue) energyHcrystValue.textContent = Hcryst_rel.toFixed(0);
+
+            const C_rel = F_rel * 0.4;
+            const M_rel = F_rel * 0.6;
+            const Cp_liq = 3.5;
+            const Cp_sol = 1.5;
+
+            const Q_sensible_F = F_rel * Cp_liq * (Tin - Tout);
+            const Q_cryst = C_rel * Hcryst_rel * 5;
+            const Q_out = Q_sensible_F + Q_cryst;
+
+            energyFeedDisplay.textContent = `${F_rel.toFixed(0)} @ ${Tin.toFixed(0)}°C`;
+            energyCrystalDisplay.textContent = `~${C_rel.toFixed(0)} @ ${Tout.toFixed(0)}°C`;
+            energyLiquorDisplay.textContent = `~${M_rel.toFixed(0)} @ ${Tout.toFixed(0)}°C`;
+            energyQoutDisplay.textContent = `Q ≈ ${Q_out.toFixed(0)}`;
+
+            let level = "Mitjana";
+            if (Q_out < 2000) level = "Baixa";
+            else if (Q_out > 6000) level = "Alta";
+            energyBalanceOutput.textContent = `Càrrega Refredament (Q) estimada: ${level}`;
+        }
+
+         if(energyFSlider && energyTinSlider && energyToutSlider && energyHcrystSlider) {
+             energyFSlider.addEventListener('input', updateEnergyBalance);
+             energyTinSlider.addEventListener('input', updateEnergyBalance);
+             energyToutSlider.addEventListener('input', updateEnergyBalance);
+             energyHcrystSlider.addEventListener('input', updateEnergyBalance);
+             window.addEventListener('load', updateEnergyBalance);
+         }
+
+    </script>
+
+</body>
+</html>
