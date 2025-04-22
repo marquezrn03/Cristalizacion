@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercici Evaporador 3: Tubs Llargs amb BPE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; background-color: #f8fafc; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in-section { opacity: 0; animation: fadeIn 0.8s ease-out forwards; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #374151; font-size: 0.875rem; }
+        input[type="range"] { width: 100%; cursor: pointer; accent-color: #0ea5e9; }
+        input[type="number"], select { padding: 0.5rem; border: 1px solid #D1D5DB; border-radius: 0.375rem; width: 100%; }
+        button, .styled-button-link { background-color: #38bdf8; color: #0c4a6e; padding: 0.5rem 1rem; border-radius: 0.375rem; font-weight: 600; transition: background-color 0.2s; display: inline-block; text-align: center; border: none; cursor: pointer;}
+        button:hover, .styled-button-link:hover { background-color: #0ea5e9; }
+        button:disabled { background-color: #bae6fd; cursor: not-allowed; }
+        h1 { color: #111827; font-size: 1.875rem; line-height: 2.25rem; font-weight: 700;}
+        h2 { color: #0c4a6e; font-size: 1.6rem; line-height: 2.1rem; font-weight: 700; border-bottom: 3px solid #7dd3fc; padding-bottom: 0.5rem; margin-top: 2.5rem; margin-bottom: 1.5rem; }
+        h3 { color: #0369a1; font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #bae6fd; padding-bottom: 0.25rem; }
+        h4 { color: #075985; font-size: 1.1rem; line-height: 1.6rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem;}
+        p, li { color: #374151; line-height: 1.75; margin-bottom: 1rem; }
+        strong { color: #1F2937; font-weight: 600; }
+        blockquote { border-left: 6px solid #38bdf8; padding: 1rem 1.5rem; margin: 1.5rem 0; color: #374151; background-color: #f0f9ff; border-radius: 0 0.5rem 0.5rem 0; box-shadow: 2px 2px 5px rgba(0,0,0,0.05); }
+        .section-bg-light { background-color: #f0f9ff; }
+        .section-bg-white { background-color: #FFFFFF; }
+        .instructional-text { font-size: 0.875rem; color: #4B5563; margin-top: 0.5rem; }
+        .output-box { margin-top: 1rem; padding: 0.75rem; background-color: #e0f2fe; border: 1px solid #bae6fd; border-radius: 0.375rem; font-size: 0.9rem; color: #0369a1; text-align: center; font-weight: 500; min-height: 40px; }
+        .output-box strong { color: #0c4a6e;}
+        .slider-label-container { display: flex; justify-content: space-between; font-size: 0.75rem; color: #6b7280; margin-top: 0.25rem; }
+        .interactive-block { margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1.5rem; border: 1px solid #e0f2fe; border-radius: 0.5rem; background-color: #ffffff; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); }
+        .interactive-block-light { margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1.5rem; border: 1px solid #e0f2fe; border-radius: 0.5rem; background-color: #f0f9ff; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); }
+        footer ul { list-style: none; padding-left: 0; }
+        footer li { margin-bottom: 0.75rem; }
+        footer a { color: #075985; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        .header-subtitle { font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; margin-top: 0.25rem; }
+        .footer-attribution { margin-top: 1.5rem; font-size: 0.875rem; line-height: 1.25rem; color: #6b7280; text-align: center; }
+        .math-block { margin: 1.5rem 0; padding: 1rem; background-color: #f0f9ff; border-left: 4px solid #38bdf8; font-size: 1.1rem; overflow-x: auto;}
+        .placeholder-box { padding: 1rem; border: 1px dashed #7dd3fc; border-radius: 0.375rem; background-color: #f0f9ff; text-align: center; color: #075985; margin: 1.5rem 0; font-style: italic; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 antialiased">
+
+    <header class="bg-gradient-to-r from-sky-600 to-cyan-600 text-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <h1 class="text-2xl md:text-3xl font-bold">Exercici Evaporador 3</h1>
+            <p class="header-subtitle">Tubs Llargs amb Increment del Punt d'Ebullició (BPE)</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+
+        <section id="enunciado" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Enunciat de l'Exercici (7.3)</h2>
+            <p>Un evaporador de tubs llargs (LTV) ha de processar <strong>15000 kg/h</strong> d'una solució aquosa d'hidròxid sòdic (NaOH) al <strong>10%</strong> (en massa) per tal de concentrar-la fins al <strong>50%</strong>.</p>
+            <p>S'utilitza vapor d'aigua saturat a <strong>5 atm</strong> (absolutes) com a fluid calefactor (\(V_0\)). La pressió absoluta en la secció d'evaporació és de <strong>620 mmHg</strong> (\(P_1\)). El coeficient global de transmissió de calor s'ha estimat en \(U = 1860 \, W/(m^2 \cdot K)\). La dissolució diluïda s'alimenta a \(t_0 = 40^\circ C\).</p>
+            <p>L'evaporador es pot considerar perfectament aïllat de l'exterior (\(Q_{pèrdues}=0\)).</p>
+            <p>Avalueu:</p>
+            <ol class="list-alpha list-inside pl-4 font-medium">
+                <li>La capacitat d'evaporació (\(V_1\)).</li>
+                <li>La potència calorífica transferida (\(Q\)).</li>
+                <li>El cabal màssic de vapor primari (\(V_0\)).</li>
+                <li>L'àrea de bescanvi (\(A_0\)).</li>
+                <li>L'economia de l'evaporador (\(E_1\)).</li>
+            </ol>
+            <blockquote class="bg-sky-50 border-sky-300">
+                <strong>Consideració Clau:</strong> Les solucions de NaOH presenten un increment significatiu del punt d'ebullició (Boiling Point Elevation, BPE) respecte a l'aigua pura a la mateixa pressió. Això afectarà la temperatura real d'ebullició (\(t_1\)) i la força impulsora per a la transferència de calor (\(\Delta T\)).
+            </blockquote>
+        </section>
+
+        <section id="paso1" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light dynamic-content">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Pas 1: Balanços de Matèria</h2>
+            <p>Primer, definim els cabals i composicions i convertim unitats:</p>
+            <ul class="list-disc list-inside pl-4 mb-4">
+                <li>Alimentació: \( L_0 = 15000 \, \text{kg/h} = \frac{15000}{3600} \, \text{kg/s} \approx 4.167 \, \text{kg/s} \)</li>
+                <li>Fracció NaOH alimentació: \( x_0 = 0.10 \)</li>
+                <li>Fracció NaOH producte: \( x_1 = 0.50 \)</li>
+            </ul>
+            <p>Balanç de matèria global:</p>
+             <div class="math-block"> \( L_0 = L_1 + V_1 \) </div>
+             <p>Balanç de matèria per al solut (NaOH):</p>
+             <div class="math-block"> \( L_0 x_0 = L_1 x_1 \) </div>
+             <p>Resolent per a \(L_1\):</p>
+             <div class="math-block">
+             $$ L_1 = L_0 \frac{x_0}{x_1} = (4.167 \, \text{kg/s}) \frac{0.10}{0.50} = 0.833 \, \text{kg/s} $$
+             </div>
+             <p>Ara calculem el cabal de vapor evaporat \(V_1\):</p>
+              <div class="math-block">
+             $$ V_1 = L_0 - L_1 = 4.167 \, \text{kg/s} - 0.833 \, \text{kg/s} = 3.334 \, \text{kg/s} $$
+              </div>
+              <div class="output-box">
+                  Resultats Balanç Matèria: <strong>L₁ ≈ 0.83 kg/s</strong>, <strong>V₁ ≈ 3.33 kg/s</strong> (Capacitat d'Evaporació)
+              </div>
+        </section>
+
+        <section id="paso2" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Pas 2: Temperatures i Entalpies</h2>
+            <p>Necessitem determinar les temperatures i entalpies de tots els corrents.</p>
+
+            <h4>Corrent de Calefacció (Vapor Primari, V₀)</h4>
+            <p>El vapor és saturat a 5 atm.</p>
+            <ul class="list-disc list-inside pl-4 mb-4">
+                 <li>\( P_0 = 5 \, \text{atm} \times \frac{101.325 \, \text{kPa}}{1 \, \text{atm}} \approx 506.6 \, \text{kPa} \)</li>
+                 <li>Consultant taules de vapor a \(P_0\): Temperatura de saturació \( T_0 \approx 152.3 \, ^\circ C \).</li>
+                 <li>Entalpia vapor saturat: \( H_0 \approx 2749 \, \text{kJ/kg} \).</li>
+                 <li>Entalpia líquid saturat (condensat): \( h_0^* \approx 642 \, \text{kJ/kg} \).</li>
+                 <li>Calor latent: \( \lambda_0 = H_0 - h_0^* \approx 2107 \, \text{kJ/kg} \).</li>
+            </ul>
+
+            <h4>Secció d'Evaporació (Corrents L₁, V₁)</h4>
+            <p>La pressió és \(P_1 = 620 \, \text{mmHg}\).</p>
+             <ul class="list-disc list-inside pl-4 mb-4">
+                 <li>\( P_1 = 620 \, \text{mmHg} \times \frac{101.325 \, \text{kPa}}{760 \, \text{mmHg}} \approx 82.66 \, \text{kPa} \)</li>
+                 <li>Temperatura d'ebullició de l'aigua pura a \(P_1\): \( T_{eb, aigua}^* \approx 94.3 \, ^\circ C \).</li>
+                 <li><strong>Increment del Punt d'Ebullició (BPE):</strong> Les solucions de NaOH eleven el punt d'ebullició. Necessitem estimar el BPE per a una solució al 50% a 82.66 kPa. Utilitzant diagrames de Dühring (com el de la Fig. 16-4 del llibre de referència o correlacions), per a \(x_1=0.5\) i \(T_{eb, aigua}^* = 94.3^\circ C \approx 202^\circ F\), s'obté \(T_{eb, solucio} \approx 277^\circ F \approx 136.1^\circ C\).</li>
+                 <li>\( BPE = T_{eb, solucio} - T_{eb, aigua}^* = 136.1^\circ C - 94.3^\circ C \approx 41.8^\circ C \).</li>
+                 <li>Temperatura real d'ebullició a l'evaporador: \( t_1 = T_{eb, solucio} = 136.1 \, ^\circ C \).</li>
+                 <li>Entalpia del producte líquid \(L_1\): A \(t_1 = 136.1^\circ C\) i \(x_1=0.5\). Es pot obtenir d'un diagrama entalpia-concentració per a NaOH-H₂O (com Fig. 16.8 del llibre de referència). Aproximadament \( h_1 \approx 637 \, \text{kJ/kg} \).</li>
+                 <li>Entalpia del vapor generat \(V_1\): Es considera vapor sobreescalfat a \(P_1 = 82.66 \, \text{kPa}\) i \(t_1 = 136.1 \, ^\circ C\). \( H_1 = H_{vapor, sat}(P_1) + C_{p, vapor} \times BPE \). Utilitzant \(H_{vapor, sat}(P_1) \approx 2667 \, \text{kJ/kg}\) i \(C_{p, vapor} \approx 1.9 \, \text{kJ/(kg·K)}\), \( H_1 \approx 2667 + 1.9 \times 41.8 \approx 2746 \, \text{kJ/kg} \).</li>
+            </ul>
+
+             <h4>Corrent d'Alimentació (L₀)</h4>
+              <ul class="list-disc list-inside pl-4 mb-4">
+                  <li>Entra a \(t_0 = 40^\circ C\) i \(x_0 = 0.1\). Del diagrama H-x per NaOH-H₂O, \( h_0 \approx 159 \, \text{kJ/kg} \).</li>
+             </ul>
+              <blockquote class="bg-sky-50 border-sky-300">
+                  <strong>Nota sobre Entalpies:</strong> Els valors d'entalpia de les dissolucions (\(h_0, h_1\)) depenen fortament de la concentració i la temperatura, i idealment s'obtenen de diagrames H-x específics per al sistema NaOH-H₂O. Els valors aquí utilitzats són aproximacions basades en l'exercici original o dades típiques. L'entalpia del vapor \(V_1\) es considera sobreescalfat a la temperatura \(t_1\) degut al BPE.
+              </blockquote>
+        </section>
+
+         <section id="paso3" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light dynamic-content">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Pas 3: Balanç d'Energia i Càlculs</h2>
+            <p>Apliquem el balanç d'energia a l'evaporador (considerat adiabàtic, \(Q_{pèrdues}=0\), i sense treball, \(W_s=0\)):</p>
+            $$ \text{Energia Entrant} = \text{Energia Sortint} $$
+            $$ L_0 h_0 + V_0 H_0 = L_1 h_1 + V_1 H_1 + V_0 h_0^* $$
+            <p>La calor transferida des del vapor de calefacció és \( Q = V_0 (H_0 - h_0^*) = V_0 \lambda_0 \). Aquesta calor és la que rep la dissolució per escalfar-se i evaporar-se:</p>
+            $$ Q = L_1 h_1 + V_1 H_1 - L_0 h_0 $$
+            <p>Calculem \(Q\):</p>
+            <div class="math-block">
+            $$ Q = (0.833 \, \text{kg/s})(637 \, \text{kJ/kg}) + (3.334 \, \text{kg/s})(2746 \, \text{kJ/kg}) - (4.167 \, \text{kg/s})(159 \, \text{kJ/kg}) $$
+            $$ Q \approx 531 + 9155 - 663 \approx 9023 \, \text{kJ/s} = 9023 \, \text{kW} $$
+            </div>
+             <div class="output-box">
+                 Resultat Apartat (b): <strong>Potència Calorífica \(Q \approx 9.02 \, MW\)</strong>
+             </div>
+
+            <p>Ara calculem el cabal de vapor primari \(V_0\):</p>
+             <div class="math-block">
+            $$ V_0 = \frac{Q}{\lambda_0} = \frac{9023 \, \text{kJ/s}}{2107 \, \text{kJ/kg}} \approx 4.28 \, \text{kg/s} $$
+             </div>
+              <div class="output-box">
+                  Resultat Apartat (c): <strong>Cabal Vapor Primari \(V_0 \approx 4.28 \, kg/s\)</strong>
+              </div>
+
+            <p>Calculem l'àrea de bescanvi \(A_0\). Necessitem la diferència de temperatura efectiva \(\Delta T\). El fluid calefactor és vapor condensant a \(T_0 = 152.3^\circ C\). El fluid que s'escalfa bull a \(t_1 = 136.1^\circ C\).</p>
+             <div class="math-block">
+             $$ \Delta T = T_0 - t_1 = 152.3^\circ C - 136.1^\circ C = 16.2^\circ C $$
+             $$ A_0 = \frac{Q}{U \Delta T} = \frac{9023 \times 10^3 \, W}{(1860 \, W/(m^2 \cdot K)) \cdot (16.2 \, K)} \approx 299.6 \, m^2 $$
+             </div>
+              <div class="output-box">
+                  Resultat Apartat (d): <strong>Àrea de Bescanvi \(A_0 \approx 300 \, m^2\)</strong>
+              </div>
+              <blockquote class="bg-amber-50 border-amber-300">
+                  <strong>Importància del BPE:</strong> Si no haguéssim considerat el BPE, hauríem usat \(t_1 = t_{eb, aigua}^* = 94.3^\circ C\). Llavors \(\Delta T = 152.3 - 94.3 = 58^\circ C\), i l'àrea calculada seria \(A_0 = 9023 \times 10^3 / (1860 \times 58) \approx 83.6 \, m^2\), una subestimació molt significativa (quasi 4 vegades menor!).
+              </blockquote>
+
+            <p>Finalment, calculem l'economia de l'evaporador \(E_1\):</p>
+             <div class="math-block">
+             $$ E_1 = \frac{\text{Massa evaporada}}{\text{Massa de vapor de calefacció}} = \frac{V_1}{V_0} = \frac{3.334 \, \text{kg/s}}{4.28 \, \text{kg/s}} \approx 0.779 $$
+             </div>
+             <div class="output-box">
+                  Resultat Apartat (e): <strong>Economia \(E_1 \approx 0.78\)</strong> (kg evaporat / kg vapor consumit)
+             </div>
+             <p>Un valor d'economia inferior a 1 és típic per a evaporadors d'un sol efecte, ja que la calor latent del vapor generat (\(V_1\)) sol ser lleugerament superior a la del vapor de calefacció (\(V_0\)) degut a la menor pressió, i a més cal aportar calor sensible per escalfar l'alimentació.</p>
+        </section>
+
+        <section id="interactivo" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light dynamic-content">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Aplicació Interactiva: Simulador de l'Evaporador (amb BPE)</h2>
+            <p class="instructional-text mb-4">Modifica els paràmetres d'entrada per veure com afecten els resultats. Les propietats termodinàmiques i el BPE s'estimen amb correlacions simplificades.</p>
+
+            <div class="interactive-block-light">
+                <h3 class="text-xl font-semibold mb-4 text-center text-sky-700">Paràmetres d'Entrada</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                    <div>
+                        <label for="sim-L0-input">Alimentació (L₀, kg/h):</label>
+                        <input type="number" id="sim-L0-input" value="15000" step="1000" min="1000">
+                    </div>
+                    <div>
+                        <label for="sim-x0-input">Conc. Inicial (x₀, % NaOH):</label>
+                        <input type="number" id="sim-x0-input" value="10" step="1" min="5" max="20">
+                    </div>
+                    <div>
+                        <label for="sim-x1-input">Conc. Final (x₁, % NaOH):</label>
+                        <input type="number" id="sim-x1-input" value="50" step="1" min="25" max="60">
+                    </div>
+                    <div>
+                        <label for="sim-P0-input">Pressió Vapor Calef. (P₀, atm abs):</label>
+                        <input type="number" id="sim-P0-input" value="5" step="0.5" min="1.5" max="10">
+                    </div>
+                     <div>
+                        <label for="sim-P1-input">Pressió Evaporador (P₁, mmHg abs):</label>
+                        <input type="number" id="sim-P1-input" value="620" step="10" min="100" max="760">
+                    </div>
+                     <div>
+                        <label for="sim-t0-input">Temp. Alimentació (t₀, °C):</label>
+                        <input type="number" id="sim-t0-input" value="40" step="5" min="10" max="90">
+                    </div>
+                     <div class="md:col-span-1 lg:col-span-3">
+                        <label for="sim-U-input">Coef. Global Transf. Calor (U, W/m²K):</label>
+                        <input type="number" id="sim-U-input" value="1860" step="100" min="500">
+                    </div>
+                </div>
+                 <div class="text-center">
+                     <button id="sim-calculate-btn">Recalcular Resultats</button>
+                 </div>
+
+                 <h3 class="text-xl font-semibold mt-8 mb-4 text-center text-sky-700">Resultats Calculats</h3>
+                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                     <div class="output-box"><strong>Balanç Matèria:</strong><br> L₁ = <span id="res-L1">0.83</span> kg/s<br>V₁ = <span id="res-V1">3.33</span> kg/s</div>
+                     <div class="output-box"><strong>Condicions Operació:</strong><br> T₀ ≈ <span id="res-T0">152</span> °C<br> t₁ ≈ <span id="res-t1">136</span> °C (BPE ≈ <span id="res-BPE">42</span> °C)</div>
+                     <div class="output-box"><strong>Energia i Àrea:</strong><br> Q ≈ <span id="res-Q">9.0</span> MW<br> V₀ ≈ <span id="res-V0">4.3</span> kg/s<br> A₀ ≈ <span id="res-A0">300</span> m²</div>
+                     <div class="output-box md:col-span-3"><strong>Economia:</strong> E₁ = <span id="res-E1">0.78</span> kg vap./kg vapor</div>
+                 </div>
+            </div>
+        </section>
+
+    </main>
+
+     <footer class="mt-16 pt-8 border-t border-gray-300 text-sm text-gray-600">
+         <p class="footer-attribution">Exercici d'Evaporadors - Resolució i Simulació</p>
+     </footer>
+
+    <script>
+        const sections_evap3 = document.querySelectorAll('.fade-in-section');
+        const observerOptions_evap3 = { root: null, rootMargin: '0px', threshold: 0.1 };
+        const observerCallback_evap3 = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-section');
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
+        const observer_evap3 = new IntersectionObserver(observerCallback_evap3, observerOptions_evap3);
+        sections_evap3.forEach(section => { observer_evap3.observe(section); });
+
+        function getSteamPropsApprox(pressure_atm) {
+            const P_kPa = pressure_atm * 101.325;
+            const Tsat = 100 + 11 * Math.log(pressure_atm);
+            const lambda = (2501 - 2.36 * Tsat) * 1000;
+            const H_vapor = (2501 + 1.88 * Tsat) * 1000;
+            const h_liquid = 4.18 * Tsat * 1000;
+            return { Tsat, lambda, H_vapor, h_liquid };
+        }
+
+         function getWaterBoilingPoint(pressure_mmHg) {
+             const P_kPa = pressure_mmHg * (101.325 / 760);
+             return 100 + 30 * Math.log10(P_kPa / 101.325);
+         }
+
+         function estimateBPE_NaOH(conc_fraction, water_boiling_temp_C) {
+             if (conc_fraction <= 0.1) return 0;
+             const conc_pct = conc_fraction * 100;
+             const bpe = (0.8 * conc_pct) + (0.007 * conc_pct * water_boiling_temp_C) - (0.005 * water_boiling_temp_C);
+             return Math.max(0, bpe);
+         }
+
+         function estimateEnthalpy_NaOH(conc_fraction, temp_C) {
+              const Cp_water = 4.18;
+              const Cp_NaOH = 1.5;
+              const DeltaH_diss = -44.5 * (conc_fraction / (1 - conc_fraction)) * (40 / 18);
+              const h = (1 - conc_fraction) * Cp_water * temp_C + conc_fraction * Cp_NaOH * temp_C + DeltaH_diss * conc_fraction;
+              return h * 1000;
+         }
+
+        function performCalculationsEvap3() {
+            try {
+                const L0_kgh = parseFloat(document.getElementById('sim-L0-input').value);
+                const x0_pct = parseFloat(document.getElementById('sim-x0-input').value);
+                const x1_pct = parseFloat(document.getElementById('sim-x1-input').value);
+                const P0_atm = parseFloat(document.getElementById('sim-P0-input').value);
+                const P1_mmHg = parseFloat(document.getElementById('sim-P1-input').value);
+                const t0_C = parseFloat(document.getElementById('sim-t0-input').value);
+                const U_W_m2K = parseFloat(document.getElementById('sim-U-input').value);
+
+                if (isNaN(L0_kgh) || isNaN(x0_pct) || isNaN(x1_pct) || isNaN(P0_atm) || isNaN(P1_mmHg) || isNaN(t0_C) || isNaN(U_W_m2K) ||
+                    L0_kgh <= 0 || x0_pct <= 0 || x1_pct <= x0_pct || P0_atm <= 0 || P1_mmHg <= 0 || U_W_m2K <= 0) {
+                    throw new Error("Entrada invàlida.");
+                }
+
+                const L0 = L0_kgh / 3600;
+                const x0 = x0_pct / 100;
+                const x1 = x1_pct / 100;
+
+                const L1 = L0 * (x0 / x1);
+                const V1 = L0 - L1;
+
+                const steamProps = getSteamPropsApprox(P0_atm);
+                const T0 = steamProps.Tsat;
+                const H0 = steamProps.H_vapor;
+                const h0_star = steamProps.h_liquid;
+                const lambda0 = steamProps.lambda;
+
+                const T_eb_agua_P1 = getWaterBoilingPoint(P1_mmHg);
+                const BPE = estimateBPE_NaOH(x1, T_eb_agua_P1);
+                const t1 = T_eb_agua_P1 + BPE;
+
+                const h0 = estimateEnthalpy_NaOH(x0, t0_C);
+                const h1 = estimateEnthalpy_NaOH(x1, t1);
+
+                const P1_kPa = P1_mmHg * (101.325 / 760);
+                const steamPropsV1 = getSteamPropsApprox(P1_kPa / 101.325);
+                const H1_approx = steamPropsV1.H_vapor + 1.9 * 1000 * BPE;
+
+                const Q = L1 * h1 + V1 * H1_approx - L0 * h0;
+                const V0 = Q / lambda0;
+                const DeltaT = T0 - t1;
+                const A0 = (U_W_m2K > 0 && DeltaT > 1e-3) ? Q / (U_W_m2K * DeltaT) : NaN;
+                const E1 = (V0 > 1e-6) ? V1 / V0 : NaN;
+
+                document.getElementById('res-L1').textContent = L1.toFixed(2);
+                document.getElementById('res-V1').textContent = V1.toFixed(2);
+                document.getElementById('res-T0').textContent = T0.toFixed(1);
+                document.getElementById('res-t1').textContent = t1.toFixed(1);
+                document.getElementById('res-BPE').textContent = BPE.toFixed(1);
+                document.getElementById('res-Q').textContent = (Q / 1e6).toFixed(2);
+                document.getElementById('res-V0').textContent = V0.toFixed(2);
+                document.getElementById('res-A0').textContent = isNaN(A0) ? "N/A" : A0.toFixed(1);
+                document.getElementById('res-E1').textContent = isNaN(E1) ? "N/A" : E1.toFixed(2);
+
+            } catch (error) {
+                 document.getElementById('res-L1').textContent = "Err";
+                 document.getElementById('res-V1').textContent = "Err";
+                 document.getElementById('res-T0').textContent = "Err";
+                 document.getElementById('res-t1').textContent = "Err";
+                 document.getElementById('res-BPE').textContent = "Err";
+                 document.getElementById('res-Q').textContent = "Err";
+                 document.getElementById('res-V0').textContent = "Err";
+                 document.getElementById('res-A0').textContent = "Err";
+                 document.getElementById('res-E1').textContent = "Err";
+                 alert(`Error en el càlcul: ${error.message}`);
+            }
+        }
+
+        const calcButtonEvap3 = document.getElementById('sim-calculate-btn');
+        if(calcButtonEvap3) {
+            calcButtonEvap3.addEventListener('click', performCalculationsEvap3);
+        }
+        window.addEventListener('load', performCalculationsEvap3);
+
+    </script>
+
+</body>
+</html>
