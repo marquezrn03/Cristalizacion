@@ -15,20 +15,20 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .fade-in-section { opacity: 0; animation: fadeIn 0.8s ease-out forwards; }
         label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #374151; font-size: 0.875rem; }
-        input[type="range"] { width: 100%; cursor: pointer; accent-color: #0ea5e9; /* sky-500 */ }
+        input[type="range"] { width: 100%; cursor: pointer; accent-color: #0ea5e9; }
         input[type="number"], select { padding: 0.5rem; border: 1px solid #D1D5DB; border-radius: 0.375rem; width: 100%; }
-        button, .styled-button-link { background-color: #38bdf8; /* sky-400 */ color: #0c4a6e; /* sky-800 */ padding: 0.5rem 1rem; border-radius: 0.375rem; font-weight: 600; transition: background-color 0.2s; display: inline-block; text-align: center; border: none; cursor: pointer;}
-        button:hover, .styled-button-link:hover { background-color: #0ea5e9; /* sky-500 */ }
-        button:disabled { background-color: #bae6fd; /* sky-200 */ cursor: not-allowed; }
+        button, .styled-button-link { background-color: #38bdf8; color: #0c4a6e; padding: 0.5rem 1rem; border-radius: 0.375rem; font-weight: 600; transition: background-color 0.2s; display: inline-block; text-align: center; border: none; cursor: pointer;}
+        button:hover, .styled-button-link:hover { background-color: #0ea5e9; }
+        button:disabled { background-color: #bae6fd; cursor: not-allowed; }
         h1 { color: #111827; font-size: 1.875rem; line-height: 2.25rem; font-weight: 700;}
-        h2 { color: #0c4a6e; /* sky-800 */ font-size: 1.6rem; line-height: 2.1rem; font-weight: 700; border-bottom: 3px solid #7dd3fc; /* sky-300 */ padding-bottom: 0.5rem; margin-top: 2.5rem; margin-bottom: 1.5rem; }
-        h3 { color: #0369a1; /* sky-700 */ font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; }
-        h4 { color: #075985; /* sky-800 */ font-size: 1.1rem; line-height: 1.6rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem;}
+        h2 { color: #0c4a6e; font-size: 1.6rem; line-height: 2.1rem; font-weight: 700; border-bottom: 3px solid #7dd3fc; padding-bottom: 0.5rem; margin-top: 2.5rem; margin-bottom: 1.5rem; }
+        h3 { color: #0369a1; font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #bae6fd; padding-bottom: 0.25rem; }
+        h4 { color: #075985; font-size: 1.1rem; line-height: 1.6rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem;}
         p, li { color: #374151; line-height: 1.75; margin-bottom: 1rem; }
         strong { color: #1F2937; font-weight: 600; }
-        blockquote { border-left: 6px solid #fcd34d; /* amber-300 */ padding: 1rem 1.5rem; margin: 2rem 0; font-style: italic; color: #374151; background-color: #fffbeb; /* amber-50 */ border-radius: 0 0.5rem 0.5rem 0; box-shadow: 2px 2px 5px rgba(0,0,0,0.05); }
+        blockquote { border-left: 6px solid #fcd34d; padding: 1rem 1.5rem; margin: 2rem 0; font-style: italic; color: #374151; background-color: #fffbeb; border-radius: 0 0.5rem 0.5rem 0; box-shadow: 2px 2px 5px rgba(0,0,0,0.05); }
         blockquote.history { border-left-color: #a3e635; background-color: #f7fee7;}
-        .section-bg-light { background-color: #f0f9ff; /* sky-50 */ }
+        .section-bg-light { background-color: #f0f9ff; }
         .section-bg-white { background-color: #FFFFFF; }
         .instructional-text { font-size: 0.875rem; color: #4B5563; margin-top: 0.5rem; }
         .output-box { margin-top: 1rem; padding: 0.75rem; background-color: #e0f2fe; border: 1px solid #bae6fd; border-radius: 0.375rem; font-size: 0.875rem; color: #0369a1; text-align: center; font-weight: 500; min-height: 40px; }
@@ -61,10 +61,7 @@
         .crystallizer-diagram .arrow { font-size: 1.5rem; color: #0ea5e9; margin: 0 0.5rem; }
         .crystallizer-diagram .label { font-size: 0.8rem; color: #0369a1; margin-top: 0.25rem; }
         .crystallizer-diagram .value { font-weight: 600; color: #0c4a6e; }
-        .tab-button { padding: 0.5rem 1rem; margin-right: 0.5rem; border: 1px solid #e0f2fe; border-bottom: none; background-color: #f0f9ff; color: #0369a1; border-radius: 0.375rem 0.375rem 0 0; cursor: pointer; transition: background-color 0.2s; font-weight: 500; }
-        .tab-button.active { background-color: #ffffff; border-color: #7dd3fc; color: #0c4a6e; font-weight: 600; }
-        .tab-content { border: 1px solid #7dd3fc; padding: 1.5rem; border-radius: 0 0.5rem 0.5rem 0.5rem; background-color: #ffffff; }
-        .tab-content > div:not(.active) { display: none; }
+        .crystallizer-desc-block { border: 1px solid #e0f2fe; border-radius: 0.5rem; padding: 1.5rem; margin-bottom: 1.5rem; background-color: #ffffff; }
         .placeholder-box { padding: 1rem; border: 1px dashed #7dd3fc; border-radius: 0.375rem; background-color: #f0f9ff; text-align: center; color: #075985; margin: 1.5rem 0; font-style: italic; }
     </style>
 </head>
@@ -81,104 +78,89 @@
 
         <section id="objectius" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
             <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">6.1 Objectius de la Cristal·lització</h2>
-            <p>La cristal·lització és una operació fonamental de separació i purificació en enginyeria química, farmacèutica i de materials, basada en la transferència simultània de matèria i calor per formar una fase sòlida cristal·lina a partir d'una fase fluida (dissolució, fusió, vapor). Els seus objectius primordials són:</p>
+            <p>La cristal·lització és una operació de separació clau en què es forma una fase sòlida amb una estructura atòmica o molecular altament ordenada (cristall) a partir d'una fase fluida (dissolució, fusió, vapor). Els seus objectius principals són:</p>
             <ul class="list-disc list-inside pl-4 mb-4">
-                <li><strong>Purificació d'Alta Eficiència:</strong> L'estructura ordenada de la xarxa cristal·lina tendeix a excloure les impureses, que romanen preferentment en la fase fluida (licor mare). És un dels mètodes més potents per obtenir sòlids d'alta puresa (>99.9%).</li>
-                <li><strong>Separació Selectiva:</strong> Permet aïllar un component desitjat d'una mescla complexa.</li>
-                <li><strong>Control de Propietats del Sòlid:</strong> Permet obtenir partícules sòlides amb característiques específiques i controlades:
+                <li><strong>Purificació:</strong> Explotant la tendència de la xarxa cristal·lina a excloure molècules diferents (impureses), la cristal·lització és un mètode potent per obtenir sòlids d'alta puresa.</li>
+                <li><strong>Separació:</strong> Aïllament selectiu d'un component d'una mescla.</li>
+                <li><strong>Control de Propietats del Producte Sòlid:</strong> Enginyeria de les propietats físiques del sòlid, fonamentals per al seu processament i aplicació:
                     <ul class="list-circle list-inside pl-6 mt-2">
-                        <li><strong>Distribució de Mida de Cristall (CSD):</strong> Crucial per a la filtrabilitat, fluïdesa, compressibilitat, velocitat de dissolució i aspecte.</li>
-                        <li><strong>Morfologia (Hàbit Cristal·lí):</strong> Afecta l'empaquetament, fluïdesa, propietats mecàniques i aspecte visual.</li>
-                        <li><strong>Polimorfisme:</strong> Obtenció selectiva d'una forma cristal·lina específica (polimorf) amb propietats físiques diferents (solubilitat, punt de fusió, estabilitat, biodisponibilitat en fàrmacs).</li>
+                        <li><strong>Distribució de Mida de Cristall (CSD):</strong> Afecta filtració, assecat, fluïdesa, dissolució, biodisponibilitat.</li>
+                        <li><strong>Morfologia (Hàbit):</strong> Influencia l'empaquetament, propietats mecàniques, aspecte.</li>
+                        <li><strong>Polimorfisme i Solvats/Hidrats:</strong> Control de la forma cristal·lina específica, cadascuna amb propietats termodinàmiques i cinètiques diferents.</li>
                     </ul>
                 </li>
-                <li><strong>Facilitat de Maneig:</strong> Un producte cristal·lí sol ser més fàcil de manejar, transportar i emmagatzemar que una dissolució o un precipitat amorf.</li>
             </ul>
-            <blockquote class="history">El concepte modern de cristal·lització com a procés de purificació es va consolidar al segle XIX, tot i que la pràctica de cristal·litzar sals com el NaCl o el sucre data de l'antiguitat. Figures com J.W. Gibbs van establir les bases termodinàmiques de l'equilibri de fases.</blockquote>
+            <blockquote class="history">La comprensió termodinàmica de la cristal·lització deu molt a J.W. Gibbs (finals s. XIX), qui va establir les bases de l'equilibri de fases i el potencial químic com a força impulsora.</blockquote>
         </section>
 
         <section id="tipus-cristalitzadors" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light dynamic-content">
             <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">6.2 Tipus de Cristal·litzadors i Equips</h2>
-            <p>L'elecció i disseny de l'equip de cristal·lització és crítica per assolir els objectius de puresa, rendiment i propietats del producte. La selecció depèn de la cinètica de nucleació i creixement, la corba de solubilitat, la viscositat, la tendència a formar incrustacions, l'escala de producció i les especificacions de la CSD.</p>
+            <p>L'elecció del cristal·litzador és una decisió d'enginyeria crucial que depèn de la termodinàmica (corba de solubilitat), la cinètica (nucleació, creixement), les propietats del fluid (viscositat), la tendència a l'embrutiment (fouling/incrustació), l'escala i les especificacions del producte (CSD, puresa, polimorf).</p>
 
-            <h3>Classificació General:</h3>
+            <h3>Classificació Principal:</h3>
             <ul class="list-disc list-inside pl-4 mb-4">
-                <li><strong>Per Mètode de Generació de Sobresaturació:</strong> Refredament (indirecte/directe), Evaporació (atmosfèrica/buit), Refredament Evaporatiu (adiabàtic/buit), Addició d'Antidissolvent (precipitació reactiva/no reactiva).</li>
-                <li><strong>Per Mode d'Operació:</strong> Discontinu (Batch), Continu (MSMPR, Classificadors), Semi-continu.</li>
-                <li><strong>Per Sistema de Suspensió:</strong> Tanc Agitat (suspensió mixta), Llit Fluiditzat (classificació), Pel·lícula Descendent.</li>
+                <li><strong>Generació de Sobresaturació:</strong> Refredament (Cooling), Evaporació (Evaporative), Refredament Evaporatiu (Vacuum Cooling), Antidissolvent (Antisolvent/Precipitation), Reacció Química (Reactive Crystallization).</li>
+                <li><strong>Mode d'Operació:</strong> Discontinu (Batch), Continu (Continuous), Semi-continu (Semi-Batch).</li>
             </ul>
 
             <h3>Dissenys Industrials Comuns (Continua):</h3>
-            <div class="interactive-block-light">
-                 <h4 class="text-lg font-semibold mb-3 text-center text-sky-700">Tipus Comuns de Cristal·litzadors Continus</h4>
-                 <div id="crystallizer-tabs" class="mb-4 border-b border-gray-300">
-                     <button class="tab-button active" onclick="showTab('msmpr')">MSMPR/FC</button>
-                     <button class="tab-button" onclick="showTab('dtb')">DTB</button>
-                     <button class="tab-button" onclick="showTab('oslo')">OSLO (Krystal)</button>
-                 </div>
-                 <div id="crystallizer-content" class="tab-content">
-                     <div id="msmpr" class="active">
-                         <h5 class="font-semibold text-sky-800 mb-2">MSMPR / Circulació Forçada (FC)</h5>
-                         <p class="text-sm"><strong>Principi:</strong> Tanc perfectament agitat on alimentació i extracció de producte (suspensió) són contínues. Idealització: CSD a la sortida = CSD dins el tanc.</p>
-                         <p class="text-sm"><strong>Característiques:</strong> Disseny simple i robust. Bon control de temperatura (FC amb intercanviador extern). La CSD és típicament ampla (exponencial) degut a la mescla completa i la no classificació. La nucleació secundària per contacte sol dominar.</p>
-                         <p class="text-sm"><strong>Aplicacions:</strong> Producció a gran escala de productes químics bàsics on la CSD no és extremadament crítica (ex: (NH₄)₂SO₄).</p>
-                         <div class="text-center my-4"><svg width="200" height="150" viewBox="0 0 100 75"><rect x="10" y="10" width="80" height="55" rx="5" ry="5" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1"/><line x1="50" y1="10" x2="50" y2="40" stroke="#0369a1" stroke-width="1.5"/><polygon points="45,40 55,40 50,50" fill="#0369a1"/><text x="50" y="8" font-size="6" text-anchor="middle">Alim.</text><line x1="90" y1="37.5" x2="105" y2="37.5" stroke="#0369a1" stroke-width="1.5" marker-end="url(#arrowhead-simple-sky)"/><text x="93" y="33" font-size="6" text-anchor="start">Producte</text><defs><marker id="arrowhead-simple-sky" markerWidth="4" markerHeight="3" refX="0" refY="1.5" orient="auto"><polygon points="0 0, 4 1.5, 0 3" fill="#0369a1"/></marker></defs></svg></div>
-                     </div>
-                     <div id="dtb">
-                         <h5 class="font-semibold text-sky-800 mb-2">Draft Tube Baffle (DTB)</h5>
-                         <p class="text-sm"><strong>Principi:</strong> Cristal·litzador agitat amb un tub central (draft tube) per dirigir el flux i una zona de separació anular (baffle) on els fins sedimenten i poden ser retirats o dissolts.</p>
-                         <p class="text-sm"><strong>Característiques:</strong> Millor control de la CSD que MSMPR gràcies a la classificació interna i la destrucció/eliminació de fins (redueix nucleació secundària). Permet operar a sobresaturacions més baixes i obtenir cristalls més grans. Comú per a cristal·lització per evaporació/refredament al buit.</p>
-                         <p class="text-sm"><strong>Aplicacions:</strong> Sals inorgàniques, sucre, on es requereix una CSD més controlada.</p>
-                          <div class="text-center my-4"><svg width="200" height="150" viewBox="0 0 100 75"><rect x="10" y="10" width="80" height="55" rx="5" ry="5" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1"/><rect x="40" y="15" width="20" height="40" fill="none" stroke="#0369a1" stroke-width="1" stroke-dasharray="2,2"/><line x1="30" y1="55" x2="70" y2="55" stroke="#0369a1" stroke-width="1"/><text x="50" y="8" font-size="6" text-anchor="middle">Alim.</text><line x1="50" y1="10" x2="50" y2="25" stroke="#0369a1" stroke-width="1.5"/><line x1="90" y1="50" x2="105" y2="50" stroke="#0369a1" stroke-width="1.5" marker-end="url(#arrowhead-simple-sky)"/><text x="93" y="46" font-size="6" text-anchor="start">Cristalls</text><line x1="90" y1="25" x2="105" y2="25" stroke="#38bdf8" stroke-width="1" marker-end="url(#arrowhead-simple-sky)"/><text x="93" y="21" font-size="6" text-anchor="start">Fins</text></svg></div>
-                     </div>
-                      <div id="oslo">
-                         <h5 class="font-semibold text-sky-800 mb-2">OSLO (Krystal) / Llit Fluiditzat</h5>
-                         <p class="text-sm"><strong>Principi:</strong> Cristal·litzador de classificació on la sobresaturació es genera externament i el licor sobresaturat fluiditza un llit de cristalls. Els cristalls creixen en el llit fins a assolir una mida suficient per sedimentar i ser extrets pel fons.</p>
-                         <p class="text-sm"><strong>Característiques:</strong> Separació espacial de la nucleació (zona de sobresaturació) i el creixement (llit fluiditzat). Permet operar a sobresaturacions molt baixes, minimitzant la nucleació i obtenint cristalls grans i amb CSD estreta. Sensible a incrustacions.</p>
-                         <p class="text-sm"><strong>Aplicacions:</strong> Producció de cristalls grans i d'alta puresa (ex: NaCl, (NH₄)₂SO₄, KNO₃).</p>
-                          <div class="text-center my-4"><svg width="200" height="150" viewBox="0 0 100 75"><path d="M20 65 Q 20 40, 50 10 Q 80 40, 80 65 Z" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1"/><rect x="35" y="45" width="30" height="20" fill="#e0f2fe"/><text x="50" y="58" font-size="5" text-anchor="middle">Llit Fluiditzat</text><line x1="50" y1="65" x2="50" y2="75" stroke="#0369a1" stroke-width="1.5" marker-start="url(#arrowhead-simple-sky-rev)"/><text x="50" y="78" font-size="6" text-anchor="middle">Alim. Licor</text><line x1="80" y1="60" x2="95" y2="60" stroke="#0369a1" stroke-width="1.5" marker-end="url(#arrowhead-simple-sky)"/><text x="83" y="56" font-size="6" text-anchor="start">Cristalls</text><line x1="50" y1="10" x2="50" y2="0" stroke="#38bdf8" stroke-width="1" marker-end="url(#arrowhead-simple-sky)"/><text x="50" y="-2" font-size="6" text-anchor="middle">Licor Clar</text><defs><marker id="arrowhead-simple-sky-rev" markerWidth="4" markerHeight="3" refX="4" refY="1.5" orient="auto"><polygon points="4 0, 0 1.5, 4 3" fill="#0369a1"/></marker></defs></svg></div>
-                     </div>
-                 </div>
+            <div class="crystallizer-desc-block">
+                 <h4 class="text-lg font-semibold mb-3 text-sky-700">Cristal·litzador MSMPR (Mixed Suspension, Mixed Product Removal) / Circulació Forçada (FC)</h4>
+                 <ul class="list-disc list-inside text-sm pl-4 space-y-1">
+                     <li><strong>Principi:</strong> Idealització d'un tanc perfectament agitat (CSTR) on la suspensió (cristalls + licor) s'extreu de forma representativa. La circulació forçada externa (FC) amb intercanviador permet un bon control de T i redueix incrustacions a les superfícies de transferència de calor.</li>
+                     <li><strong>Característiques:</strong> Disseny relativament simple i econòmic. L'agitació intensa manté la suspensió homogènia però afavoreix la nucleació secundària per contacte i el trencament (attrition). La CSD resultant és típicament ampla i segueix una distribució exponencial teòrica. Control limitat sobre la CSD.</li>
+                     <li><strong>Aplicacions:</strong> Producció a gran escala on una CSD ampla és acceptable (ex: fertilitzants com (NH₄)₂SO₄, KCl).</li>
+                 </ul>
+            </div>
+             <div class="crystallizer-desc-block">
+                 <h4 class="text-lg font-semibold mb-3 text-sky-700">Cristal·litzador DTB (Draft Tube Baffle)</h4>
+                 <ul class="list-disc list-inside text-sm pl-4 space-y-1">
+                     <li><strong>Principi:</strong> Tanc agitat amb un tub central (draft tube) per a la circulació interna controlada (impulsada per un agitador intern o extern) i una zona de sedimentació anular (separada per un deflector o baffle).</li>
+                     <li><strong>Característiques:</strong> Permet la classificació interna: els cristalls grans sedimenten a la zona anular i s'extreuen pel fons, mentre que els fins són recirculats o extrets selectivament de la zona superior clara (eliminació/destrucció de fins). Això permet operar a menor sobresaturació a la zona de creixement, reduir la nucleació secundària i obtenir una CSD més estreta i cristalls més grans que en un MSMPR. Sovint usat en cristal·lització per buit (refredament evaporatiu).</li>
+                     <li><strong>Aplicacions:</strong> Producció de sals inorgàniques (NaCl, Na₂SO₄), sucre, on es busca un millor control de la CSD.</li>
+                 </ul>
+            </div>
+             <div class="crystallizer-desc-block">
+                 <h4 class="text-lg font-semibold mb-3 text-sky-700">Cristal·litzador OSLO (Krystal) / Llit Fluiditzat</h4>
+                 <ul class="list-disc list-inside text-sm pl-4 space-y-1">
+                     <li><strong>Principi:</strong> Cristal·litzador de classificació on la sobresaturació es genera externament (escalfant/evaporant i després refredant lleugerament el licor clar recirculat) i s'introdueix per la part inferior d'una cambra on fluiditza un llit de cristalls.</li>
+                     <li><strong>Característiques:</strong> Separació física de les zones de generació de sobresaturació/nucleació (externa o a la part superior) i de creixement (llit fluiditzat). Permet un control molt fi de la sobresaturació en el llit (\(\approx\) MSZW), minimitzant la nucleació i maximitzant el creixement sobre els cristalls existents. Produeix cristalls grans amb CSD molt estreta. Requereix un bon control hidrodinàmic per mantenir la fluidització estable.</li>
+                     <li><strong>Aplicacions:</strong> Producció de cristalls grans i d'alta uniformitat (ex: NaCl de grau alimentari, (NH₄)₂SO₄, KNO₃, ADP).</li>
+                 </ul>
             </div>
             <blockquote class="history">El disseny de cristal·litzadors industrials va experimentar un gran avenç amb els treballs de Swenson i Walker (cristal·litzador OSLO/Krystal) i la formalització del concepte MSMPR per Randolph i Larson a la dècada de 1960, que va permetre aplicar els Balanços de Població.</blockquote>
         </section>
 
         <section id="nucleacio-creixement" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
             <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">6.3 Nucleació i Creixement. Població de Cristalls.</h2>
-            <p>La formació de cristalls a partir d'una fase fluida sobresaturada és un procés complex governat per la termodinàmica (força impulsora: sobresaturació) i la cinètica (velocitats de nucleació i creixement).</p>
+            <p>La formació de cristalls és un procés cinètic governat per la sobresaturació (\( \sigma = (C - C_{sat})/C_{sat} \)), que actua com a força impulsora tant per a la nucleació com per al creixement.</p>
 
-            <h4>Termodinàmica: Sobresaturació</h4>
-            <p>La sobresaturació (\(\Delta C = C - C_{sat}\) o \(S = C / C_{sat} > 1\)) representa l'excés de concentració de solut per sobre del valor d'equilibri a una T i P donades. És la força impulsora indispensable per a ambdós processos. L'energia lliure de Gibbs associada a la transferència de solut de la dissolució al cristall és negativa (\(\Delta G < 0\)) només si la dissolució està sobresaturada.</p>
-
-            <h4>Nucleació: El Naixement dels Cristalls</h4>
-            <p>Segons la Teoria Clàssica de Nucleació (CNT), la formació d'un nucli estable requereix superar una barrera d'energia lliure (\(\Delta G^*\)), relacionada amb la creació de nova superfície sòlid-líquid (cost energètic) i la formació de volum sòlid (guany energètic). \(\Delta G^*\) disminueix dràsticament en augmentar la sobresaturació.</p>
+            <h4>Nucleació (B): Formació de Nous Cristalls</h4>
+            <p>Basada en la Teoria Clàssica de Nucleació (CNT), la formació d'un nucli de mida crítica (\(r^*\)) requereix superar una barrera energètica (\(\Delta G^*\)).</p>
             <ul class="list-disc list-inside pl-4 mb-4">
-                <li><strong>Primària Homogènia:</strong> Formació espontània en el si del fluid. Requereix \(\Delta G^*\) elevada (sobresaturació alta). Velocitat \(B_{hom} \propto \exp(-\frac{A}{\Delta C^2})\). Poc rellevant industrialment.</li>
-                <li><strong>Primària Heterogènia:</strong> Sobre superfícies preexistents (impureses, parets). La superfície redueix l'energia interfacial necessària, disminuint \(\Delta G^*\). Ocorre a sobresaturacions més baixes que l'homogènia. Velocitat \(B_{het} \propto \exp(-\frac{A'}{\Delta C^2})\) amb \(A' < A\).</li>
-                <li><strong>Secundària:</strong> Induïda per cristalls preexistents. És el mecanisme dominant en cristal·litzadors continus. La velocitat (\(B_{sec}\)) sol dependre de la sobresaturació, la densitat de suspensió (\(M_T\)), l'energia d'agitació (\(\epsilon\)) i altres factors: \(B_{sec} \propto \Delta C^b M_T^j \epsilon^k\). El mecanisme per contacte és sovint el més important.</li>
+                <li><strong>Primària (Homogènia/Heterogènia):</strong> Formació de nuclis en absència de cristalls propis. La velocitat depèn exponencialment de la sobresaturació: \(B \propto \exp(-\frac{K}{\sigma^2})\). La heterogènia (sobre impureses/superfícies) domina sobre l'homogènia (en el si del fluid) per tenir una barrera energètica menor.</li>
+                <li><strong>Secundària:</strong> Induïda per la presència de cristalls propis. És el mecanisme dominant a nivell industrial. La velocitat sol seguir una llei potencial: \(B_{sec} = k_b \sigma^b M_T^j \epsilon^k\), on \(b\) (ordre respecte a \(\sigma\)) sol ser ~1-3, \(M_T\) és la densitat de suspensió (impacte dels cristalls, ordre \(j \approx 1\)), i \(\epsilon\) és la dissipació d'energia per agitació (impacte de col·lisions, ordre \(k \approx 0.5-1\)).</li>
             </ul>
-            <blockquote class="history">Els conceptes de sobresaturació i la zona metaestable van ser estudiats per Ostwald i Miers a principis del segle XX, establint les bases per entendre la nucleació.</blockquote>
 
-            <h4>Creixement Cristal·lí: Augment de Mida</h4>
-            <p>Un cop format un nucli estable, aquest creix per incorporació de més solut. La velocitat de creixement lineal (\(G = dL/dt\)) sol dependre de la sobresaturació segons una llei potencial \(G = k_g \Delta C^g\), on \(g\) és l'ordre de creixement (sovint entre 1 i 2).</p>
-            <p>El procés global pot estar limitat per:</p>
+            <h4>Creixement Cristal·lí (G): Augment de Mida</h4>
+            <p>La velocitat lineal de creixement (\(G = dL/dt\)) també depèn de la sobresaturació, sovint segons \(G = k_g \sigma^g\), amb \(g\) (ordre respecte a \(\sigma\)) típicament entre 1 i 2. El procés pot estar limitat per:</p>
             <ul class="list-disc list-inside pl-4 mb-4">
-                <li><strong>Difusió Volúmica:</strong> Transport del solut des del si de la dissolució fins a la interfície cristall-líquid a través de la capa límit. Rellevant a baixes sobresaturacions o alta viscositat.</li>
-                <li><strong>Integració Superficial:</strong> Processos a la superfície del cristall (adsorció, migració superficial, integració a la xarxa). Pot seguir diferents models (BCF - Burton, Cabrera, Frank; models de creixement per capes o continu). Rellevant a altes sobresaturacions o baixa viscositat.</li>
+                <li><strong>Difusió Externa:</strong> Transport de massa a través de la capa límit. \(G \propto \Delta C\).</li>
+                <li><strong>Integració Superficial:</strong> Processos a la interfície (adsorció, migració, incorporació). Segons models com BCF (Burton, Cabrera, Frank), pot dependre de \(\sigma\) o \(\sigma^2\).</li>
             </ul>
-            <p>Impureses, additius i el dissolvent poden afectar dràsticament la cinètica de creixement i la morfologia final del cristall (hàbit).</p>
+            <p>La velocitat global ve determinada pel pas més lent. Impureses poden inhibir el creixement (enverinament).</p>
 
             <h4>Distribució de Mida de Cristall (CSD) i Balanç de Població (PBE)</h4>
-            <p>La CSD resultant (\(n(L)\), densitat numèrica de cristalls de mida L) és conseqüència de les velocitats relatives de nucleació (B) i creixement (G), així com d'altres fenòmens com aglomeració, trencament i classificació/extracció de cristalls. El Balanç de Població (PBE) és l'eina matemàtica (equació integro-diferencial) que descriu l'evolució de \(n(L, t)\) considerant tots aquests mecanismes. Per a un MSMPR continu en estat estacionari, el PBE es simplifica a:</p>
-            $$ \frac{d(G \cdot n)}{dL} + \frac{n}{\tau} = 0 $$
-            <p>(Suposant \(G\) independent de \(L\)). La solució dóna una distribució exponencial: \(n(L) = n^0 \exp(-L / (G\tau))\), on \(n^0 = B/G\) és la densitat de nuclis i \(\tau\) és el temps de residència mitjà.</p>
+            <p>La CSD (\(n(L)\)) és el resultat de la competència entre B i G. El Balanç de Població (PBE) descriu matemàticament l'evolució de \(n(L,t)\). Per a un MSMPR continu i estacionari, sense aglomeració ni trencament i amb G independent de L:</p>
+            $$ \frac{dn}{dt} = 0 = B \delta(L-L_0) - \frac{d(G n)}{dL} - \frac{n}{\tau} $$
+            <p>La solució és \(n(L) = n^0 \exp(-L / (G\tau))\), on \(n^0 = B/G\). Controlar la CSD implica manipular B i G a través de la sobresaturació, temperatura, agitació, temps de residència (\(\tau\)), etc.</p>
 
-             <div class="interactive-block-light">
+             <div class="interactive-block">
                  <h4 class="text-lg font-semibold mb-3 text-center text-sky-700">Simulador Conceptual Nucleació vs. Creixement i CSD</h4>
                  <p class="instructional-text text-center mb-4">Ajusta la sobresaturació i l'agitació per veure l'efecte conceptual sobre la nucleació (nous punts), el creixement (mida dels punts) i la forma de la CSD.</p>
                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                      <div>
-                         <label for="nucl-supersat-slider">Sobresaturació (\(\Delta C\)):</label>
+                         <label for="nucl-supersat-slider">Sobresaturació (\(\sigma\), relatiu):</label>
                          <input type="range" id="nucl-supersat-slider" min="1" max="100" value="50" step="1">
                          <div class="slider-label-container"><span>Baixa</span><span id="nucl-supersat-value">50</span><span>Alta</span></div>
                      </div>
@@ -200,20 +182,20 @@
              </div>
         </section>
 
-        <section id="corbes-solubilitat" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+        <section id="corbes-solubilitat" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light dynamic-content">
             <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">6.4 Corbes de Solubilitat i Sobresaturació</h2>
-            <p>La <strong>solubilitat</strong> (\(C_{sat}\) o \(x_{sat}\)) és la concentració màxima de solut que pot dissoldre's en un dissolvent a una temperatura i pressió donades per formar una dissolució saturada en equilibri termodinàmic amb la fase sòlida. La representació gràfica de \(C_{sat}\) vs \(T\) és la <strong>corba de solubilitat</strong>.</p>
-            <p>La <strong>sobresaturació</strong> (\(\Delta C = C - C_{sat} > 0\)) és la força impulsora termodinàmica per a la cristal·lització. Es pot generar per:</p>
+            <p>La <strong>solubilitat</strong> (\(C_{sat}\) o \(x_{sat}\)) defineix l'equilibri termodinàmic sòlid-líquid. La seva dependència amb la temperatura (corba de solubilitat) dicta l'estratègia principal per generar sobresaturació.</p>
+            <p>La <strong>sobresaturació</strong> (\(\sigma = S-1\)) és la força impulsora cinètica. La regió entre la corba de solubilitat (\(S=1\)) i el límit on la nucleació primària és ràpida (límit metaestable superior) és la <strong>Zona Metaestable (MSZ)</strong>. Operar dins la MSZ afavoreix el creixement sobre la nucleació.</p>
+            <p>L'amplada de la zona metaestable (MSZW) és un paràmetre cinètic crucial, influenciat per:</p>
             <ul class="list-disc list-inside pl-4 mb-4">
-                <li><strong>Refredament:</strong> Si \(dC_{sat}/dT > 0\).</li>
-                <li><strong>Evaporació del dissolvent:</strong> Augmenta C mantenint T constant.</li>
-                <li><strong>Addició d'antisolvent:</strong> Redueix \(C_{sat}\) del solut a la mescla de dissolvents.</li>
-                <li><strong>Reacció Química (Precipitació):</strong> Es forma un producte poc soluble.</li>
+                <li>Velocitat de canvi de condicions (refredament, evaporació).</li>
+                <li>Nivell d'agitació (augmenta nucleació secundària).</li>
+                <li>Presència d'impureses (poden actuar com a nuclis heterogenis o inhibidors).</li>
+                <li>Presència de cristalls (sembra, nucleació secundària).</li>
             </ul>
-            <p>La <strong>Zona Metaestable (MSZ)</strong> és la regió de sobresaturació (\(C > C_{sat}\)) on la nucleació primària espontània és cinèticament molt lenta o negligible en l'escala de temps del procés. El seu límit superior és la <strong>corba de sobresaturació</strong> o límit metaestable. Dins la MSZ, el creixement de cristalls preexistents domina. L'amplada de la zona metaestable (MSZW) depèn de factors cinètics (velocitat de refredament/evaporació, agitació, impureses, presència de sòlids) i no és una propietat termodinàmica intrínseca.</p>
             <blockquote class="history">El concepte de zona metaestable i la seva importància pràctica van ser clarificats per Miers al voltant de 1906, observant que la nucleació espontània requeria un cert grau de "superrefredament" (sobresaturació) per sota de la corba de solubilitat.</blockquote>
 
-            <div class="interactive-block">
+            <div class="interactive-block-light">
                  <h4 class="text-lg font-semibold mb-3 text-center text-sky-700">Explorador de Corba de Solubilitat i MSZW</h4>
                  <p class="instructional-text text-center mb-4">Fes clic al gràfic o ajusta els sliders per explorar les zones de cristal·lització.</p>
                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -229,11 +211,31 @@
                   <div id="solubility-plot-container" class="plot-container bg-white rounded shadow-inner p-2 cursor-crosshair">
                      <svg id="solubility-plot-svg" class="plot-svg" width="500" height="350"></svg>
                  </div>
-                 <div id="solubility-output" class="output-box">Zona: Estable (No Saturada). ΔC = -5.0 g/100g</div>
+                 <div id="solubility-output" class="output-box">Zona: Estable (No Saturada). ΔC ≈ -5.0 g/100g</div>
             </div>
+
+             <div class="interactive-block">
+                 <h4 class="text-lg font-semibold mb-3 text-center text-sky-700">Efecte de la Velocitat de Refredament (Conceptual)</h4>
+                 <p class="instructional-text text-center mb-4">Ajusta la velocitat de refredament per veure el seu impacte conceptual en la nucleació vs creixement i la CSD resultant.</p>
+                 <div class="mb-4 px-4">
+                     <label for="cooling-rate-slider">Velocitat de Refredament:</label>
+                     <input type="range" id="cooling-rate-slider" min="0" max="100" value="50" step="1">
+                     <div class="slider-label-container"><span>Lenta</span><span id="cooling-rate-value">50</span><span>Ràpida</span></div>
+                 </div>
+                 <div class="flex flex-col md:flex-row gap-4 items-center">
+                     <div class="nucleation-svg-container flex-1">
+                         <svg id="cooling-nucleation-svg" class="nucleation-svg"></svg>
+                     </div>
+                     <div class="csd-plot-container flex-1">
+                          <svg id="cooling-csd-plot-svg" class="csd-plot-svg" viewBox="0 0 300 100"></svg>
+                     </div>
+                 </div>
+                 <div id="cooling-output" class="output-box">Resultat: Balanç nucleació/creixement. CSD: Moderada.</div>
+             </div>
+
         </section>
 
-        <section id="rendiment" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light dynamic-content">
+        <section id="rendiment" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
             <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">6.5 Rendiment i Eficàcia de Cristal·lització</h2>
             <p>El <strong>rendiment</strong> (\(Y\)) d'una operació de cristal·lització quantifica la fracció màssica del solut inicialment present a l'alimentació que es recupera com a producte cristal·lí sòlid. És un indicador clau de l'eficiència de la separació.</p>
             <p>L'<strong>Eficàcia de Cristal·lització</strong> (\(\eta\)) sol expressar-se en percentatge:</p>
@@ -245,7 +247,7 @@
             <p>(Aquesta última expressió s'obté combinant balanç global i de solut). Factors com l'evaporació, la formació d'hidrats i les pèrdues mecàniques redueixen el rendiment real respecte al teòric.</p>
         </section>
 
-        <section id="calcul" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+        <section id="calcul" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light dynamic-content">
             <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">6.6 Càlcul d’un Cristal·litzador</h2>
             <p>El disseny rigorós i l'anàlisi de l'operació d'un cristal·litzador es basen en l'aplicació dels principis d'equilibri de fases i els balanços de conservació de matèria i energia.</p>
 
@@ -278,10 +280,10 @@
             <h3 class="text-xl font-semibold">6.6.3 Balanços de Matèria i Energia</h3>
             <p>Per a un cristal·litzador continu operant en estat estacionari:</p>
             <p><strong>Balanç Global de Matèria:</strong> \( F = M + V + C \)</p>
-            <p><strong>Balanç de Solut (anhidre):</strong> \( F x_F = M x_M + C x_C + V x_V \)</p>
-            <p>(Normalment \(x_V = 0\). \(x_M\) és la solubilitat a \(T_{sortida}\). \(x_C\) és la fracció màssica de solut anhidre en els cristalls).</p>
-            <p><strong>Balanç de Dissolvent:</strong> \( F (1-x_F) = M (1-x_M) + C (1-x_C) + V (1-x_V) \)</p>
-            <p>(Normalment \(1-x_V = 1\)). Aquests balanços permeten calcular C i M (i V si hi ha evaporació).</p>
+            <p><strong>Balanç de Solut (anhidre):</strong> \( F x_F^{anh} = M x_M^{anh} + C x_C^{anh} + V x_V^{anh} \)</p>
+            <p>(Normalment \(x_V^{anh} = 0\). \(x_M^{anh}\) és la fracció màssica de solut anhidre en el licor mare, que correspon a la solubilitat a \(T_{sortida}\) expressada en base anhidra. \(x_C^{anh}\) és la fracció màssica de solut anhidre en els cristalls).</p>
+            <p><strong>Balanç de Dissolvent (o component inert):</strong> \( F (1-x_F^{anh}) = M (1-x_M^{anh}) + C (1-x_C^{anh}) + V (1-x_V^{anh}) \)</p>
+            <p>(Normalment \(1-x_V^{anh} = 1\)). Aquests balanços permeten calcular C i M (i V si hi ha evaporació).</p>
 
             <div class="interactive-block-light">
                  <h4 class="text-lg font-semibold mb-3 text-center text-sky-700">Calculadora de Balanç de Matèria (Refredament Simple)</h4>
@@ -292,31 +294,29 @@
                          <input type="range" id="mass-F-slider" min="100" max="10000" value="1000" step="100">
                      </div>
                      <div>
-                         <label for="mass-xF-slider">Conc. Alim. (xF, % pes solut): <span id="mass-xF-value">40</span></label>
+                         <label for="mass-xF-slider">Conc. Alim. (xF, % pes solut anhidre): <span id="mass-xF-value">40</span></label>
                          <input type="range" id="mass-xF-slider" min="10" max="60" value="40" step="1">
                      </div>
                      <div>
-                         <label for="mass-xM-slider">Solubilitat Final (xM, % pes solut): <span id="mass-xM-value">20</span></label>
+                         <label for="mass-xM-slider">Solubilitat Final (xM, % pes solut anhidre): <span id="mass-xM-value">20</span></label>
                          <input type="range" id="mass-xM-slider" min="5" max="35" value="20" step="1">
                      </div>
                      <div>
-                         <label for="mass-xC-input">Conc. Cristal (xC, % pes solut):</label>
+                         <label for="mass-xC-input">Conc. Cristal (xC, % pes solut anhidre):</label>
                          <input type="number" id="mass-xC-input" value="100" step="1" min="10" max="100" class="w-full">
-                         <p class="instructional-text text-xs">Per hidrats, posa % solut anhidre.</p>
+                         <p class="instructional-text text-xs">Ex: 100 per anhidre, ~48.8 per MgSO₄·7H₂O.</p>
                      </div>
                  </div>
                  <div id="mass-balance-output" class="output-box">Cristalls (C): 250.0 kg | Licor Mare (M): 750.0 kg | Eficàcia: 62.5%</div>
-                 <div id="lever-rule-vis" class="mt-4 text-center instructional-text"></div>
+                 <div id="lever-rule-vis" class="mt-4 text-center instructional-text">Regla Palanca: M/C = 0.600 / 0.200 ≈ 3.00</div>
             </div>
 
             <p><strong>Balanç d'Energia (Entalpia):</strong></p>
             $$ \sum_{in} F_i H_i + Q_{in} = \sum_{out} F_j H_j + Q_{out} + W_s $$
             <p>Per a un cristal·litzador per refredament continu sense evaporació (\(V=0\), \(Q_{in}=0\), \(W_s \approx 0\)):</p>
             $$ F H_F = M H_M + C H_C + Q_{out} $$
-            <p>La càrrega tèrmica a retirar (\(Q_{out}\)) es calcula a partir de les entalpies específiques llegides del diagrama H-x o calculades a partir de calors específiques (\(C_p\)) i calor latent de cristal·lització (\(\Delta H_{crist}\), que és negativa per a processos exotèrmics):</p>
-            $$ Q_{out} = F C_{p,F} (T_F - T_{ref}) - M C_{p,M} (T_M - T_{ref}) - C C_{p,C} (T_C - T_{ref}) - C (-\Delta H_{crist}) $$
-            <p>(Aproximació si no s'usa diagrama H-x. \(T_M = T_C = T_{sortida}\)).</p>
-             <blockquote class="history">Els balanços de matèria i energia aplicats a operacions unitàries van ser sistematitzats per pioners de l'enginyeria química com McCabe, Thiele i altres a mitjans del segle XX.</blockquote>
+            <p>La càrrega tèrmica a retirar (\(Q_{out}\)) es calcula a partir de les entalpies específiques llegides del diagrama H-x o calculades a partir de calors específiques (\(C_p\)) i calor latent de cristal·lització (\(\Delta H_{crist}\), que és negativa per a processos exotèrmics).</p>
+             <blockquote class="history">Els balanços de matèria i energia aplicats a operacions unitàries van ser sistematitzats per pioners de l'enginyeria química com McCabe, Thiele i altres a mitjans del segle XX, formant la base de l'anàlisi de processos.</blockquote>
 
             <div class="interactive-block-light">
                  <h4 class="text-lg font-semibold mb-3 text-center text-sky-700">Visualitzador Conceptual Balanç d'Energia (Refredament)</h4>
@@ -383,8 +383,8 @@
     </main>
 
      <footer class="mt-16 pt-8 border-t border-gray-300 text-sm text-gray-600">
-         <p class="footer-attribution">Cristal·lització </p>
-         <p class="footer-attribution">Developed by ronald.marquez@udg.edu / Powered by Gemini 2.5</p>
+         <p class="footer-attribution">Curs de Cristal·lització Industrial</p>
+         <p class="footer-attribution">Basat en material acadèmic i coneixement general d'enginyeria química.</p>
      </footer>
 
     <script>
@@ -439,7 +439,7 @@
 
             const svgNode = solubilityPlotSvg.node();
             if (!svgNode) return;
-            const width = svgNode.closest('.plot-container').getBoundingClientRect().width || 500;
+            const width = svgNode.closest('.plot-container')?.getBoundingClientRect().width || 500;
             const height = 350;
             const margin = {top: 20, right: 20, bottom: 50, left: 60};
             const plotWidth = width - margin.left - margin.right;
@@ -495,7 +495,7 @@
             if (!solubilityPlotSvg.empty()) {
                 const svgNode = solubilityPlotSvg.node();
                 const margin = {top: 20, right: 20, bottom: 50, left: 60};
-                const width = svgNode.getBoundingClientRect().width;
+                const width = svgNode.closest('.plot-container')?.getBoundingClientRect().width || 500;
                 const height = 350;
                 const plotWidth = width - margin.left - margin.right;
                 const plotHeight = height - margin.top - margin.bottom;
@@ -542,10 +542,12 @@
             nucleationSvg.selectAll("*").remove();
             const numNuclei = Math.min(60, Math.max(2, Math.round(B_rel * 100)));
             const meanRadius = Math.max(2, Math.min(18, G_rel * 30));
-            const radiusStdDev = meanRadius * (0.2 + B_rel / (G_rel + B_rel) * 0.6);
+            const radiusStdDev = meanRadius * (0.2 + B_rel / (G_rel + B_rel + 1e-6) * 0.6);
 
+            const crystalData = [];
             for (let i = 0; i < numNuclei; i++) {
                 const r = Math.max(1, d3.randomNormal(meanRadius, radiusStdDev)());
+                crystalData.push(r);
                 nucleationSvg.append("circle")
                     .attr("cx", Math.random() * 280 + 10)
                     .attr("cy", Math.random() * 180 + 10)
@@ -572,7 +574,7 @@
             const numBins = 10;
             const maxRadius = meanRadius + 3 * radiusStdDev;
             const histogram = d3.histogram().domain([0, maxRadius]).thresholds(numBins);
-            const bins = histogram(d3.range(numNuclei).map(() => Math.max(0, d3.randomNormal(meanRadius, radiusStdDev)())));
+            const bins = histogram(crystalData);
 
             const csdXScale = d3.scaleLinear().domain([0, maxRadius]).range([0, csdPlotWidth]);
             const csdYScale = d3.scaleLinear().domain([0, d3.max(bins, d => d.length)]).range([csdPlotHeight, 0]).nice();
@@ -595,9 +597,77 @@
         if (nuclSupersatSlider && nuclAgitationSlider) {
             nuclSupersatSlider.addEventListener('input', updateNucleationVisual);
             nuclAgitationSlider.addEventListener('input', updateNucleationVisual);
-            if(nuclTempSlider) nuclTempSlider.addEventListener('input', updateNucleationVisual);
+            if(document.getElementById('nucl-temp-slider')) document.getElementById('nucl-temp-slider').addEventListener('input', updateNucleationVisual);
             window.addEventListener('load', updateNucleationVisual);
         }
+
+        const coolingRateSlider = document.getElementById('cooling-rate-slider');
+        const coolingRateValue = document.getElementById('cooling-rate-value');
+        const coolingNucleationSvg = d3.select("#cooling-nucleation-svg");
+        const coolingCsdPlotSvg = d3.select("#cooling-csd-plot-svg");
+        const coolingOutput = document.getElementById('cooling-output');
+
+        function updateCoolingVisual() {
+            if(!coolingRateSlider || coolingNucleationSvg.empty() || coolingCsdPlotSvg.empty() || !coolingOutput) return;
+            const coolingRate = parseInt(coolingRateSlider.value);
+            if(coolingRateValue) coolingRateValue.textContent = coolingRate;
+
+            const B_rel_cool = Math.pow(coolingRate / 100, 1.5);
+            const G_rel_cool = Math.pow(1 - coolingRate / 100, 0.5);
+
+            coolingNucleationSvg.selectAll("*").remove();
+            const numNuclei_cool = Math.min(60, Math.max(5, Math.round(B_rel_cool * 80)));
+            const meanRadius_cool = Math.max(2, Math.min(18, G_rel_cool * 20 + 2));
+            const radiusStdDev_cool = meanRadius_cool * (0.15 + B_rel_cool / (G_rel_cool + B_rel_cool + 1e-6) * 0.5);
+
+            const crystalData_cool = [];
+            for (let i = 0; i < numNuclei_cool; i++) {
+                const r = Math.max(1, d3.randomNormal(meanRadius_cool, radiusStdDev_cool)());
+                crystalData_cool.push(r);
+                coolingNucleationSvg.append("circle")
+                    .attr("cx", Math.random() * 280 + 10)
+                    .attr("cy", Math.random() * 180 + 10)
+                    .attr("r", r)
+                    .attr("class", r < meanRadius_cool * 0.6 ? "nucleus" : "crystal");
+            }
+
+            let csdTrend_cool = "Moderada";
+            if (B_rel_cool > G_rel_cool * 1.2) csdTrend_cool = "Fina/Ampla";
+            else if (G_rel_cool > B_rel_cool * 1.2) csdTrend_cool = "Grossa/Estreta";
+            coolingOutput.textContent = `Resultat: ${csdTrend_cool}.`;
+
+            const csdWidth = 300, csdHeight = 100;
+            const csdMargin = {top: 5, right: 5, bottom: 20, left: 25};
+            const csdPlotWidth = csdWidth - csdMargin.left - csdMargin.right;
+            const csdPlotHeight = csdHeight - csdMargin.top - csdMargin.bottom;
+
+            coolingCsdPlotSvg.selectAll("*").remove();
+            const csdG = coolingCsdPlotSvg.append("g").attr("transform", `translate(${csdMargin.left},${csdMargin.top})`);
+            const numBins = 10;
+            const maxRadius_cool = meanRadius_cool + 3 * radiusStdDev_cool;
+            const histogram_cool = d3.histogram().domain([0, maxRadius_cool]).thresholds(numBins);
+            const bins_cool = histogram_cool(crystalData_cool);
+            const csdXScale_cool = d3.scaleLinear().domain([0, maxRadius_cool]).range([0, csdPlotWidth]);
+            const csdYScale_cool = d3.scaleLinear().domain([0, d3.max(bins_cool, d => d.length)]).range([csdPlotHeight, 0]).nice();
+
+            csdG.selectAll("rect")
+                .data(bins_cool)
+                .enter().append("rect")
+                  .attr("x", d => csdXScale_cool(d.x0) + 1)
+                  .attr("width", d => Math.max(0, csdXScale_cool(d.x1) - csdXScale_cool(d.x0) - 1))
+                  .attr("y", d => csdYScale_cool(d.length))
+                  .attr("height", d => csdPlotHeight - csdYScale_cool(d.length))
+                  .attr("class", "bar");
+             csdG.append("g").attr("transform", `translate(0,${csdPlotHeight})`).call(d3.axisBottom(csdXScale_cool).ticks(5));
+             csdG.append("g").call(d3.axisLeft(csdYScale_cool).ticks(3));
+             csdG.append("text").attr("transform", `translate(${csdPlotWidth / 2}, ${csdPlotHeight + csdMargin.bottom - 5})`).style("text-anchor", "middle").style("font-size", "8px").text("Mida (L)");
+             csdG.append("text").attr("transform", "rotate(-90)").attr("y", 0 - csdMargin.left + 5).attr("x", 0 - (csdPlotHeight / 2)).attr("dy", "0.5em").style("text-anchor", "middle").style("font-size", "8px").text("Nombre (n)");
+        }
+         if (coolingRateSlider) {
+            coolingRateSlider.addEventListener('input', updateCoolingVisual);
+            window.addEventListener('load', updateCoolingVisual);
+        }
+
 
         const massFSlider = document.getElementById('mass-F-slider');
         const massFValue = document.getElementById('mass-F-value');
@@ -622,15 +692,21 @@
 
             let C = 0, M = 0, efficacy = 0;
             let leverText = "Regla Palanca: Invàlid (xC ≤ xM o xF < xM)";
-            if (xC > xM && xF >= xM) {
+            if (xC > xM + 1e-6 && xF >= xM - 1e-6) {
                  C = F * (xF - xM) / (xC - xM);
                  M = F - C;
                  if (F * xF > 1e-6) {
                      efficacy = (C * xC) / (F * xF) * 100;
                  }
-                 leverText = `Regla Palanca: M/C = ${(xC - xF).toFixed(3)} / ${(xF - xM).toFixed(3)} ≈ ${(M/C).toFixed(2)}`;
+                 if (C > 1e-6 && Math.abs(xC - xM) > 1e-6 && Math.abs(xF - xM) > 1e-9) {
+                    leverText = `Regla Palanca: M/C = ${(xC - xF).toFixed(3)} / ${(xF - xM).toFixed(3)} ≈ ${(M/C).toFixed(2)}`;
+                 } else if (C <= 1e-6) {
+                    leverText = "Regla Palanca: No hi ha cristalls (C≈0)";
+                 }
             } else {
                 M = F;
+                C = 0;
+                efficacy = 0;
             }
             C = Math.max(0, C);
             M = Math.max(0, M);
@@ -679,7 +755,6 @@
             const C_rel = F_rel * 0.4;
             const M_rel = F_rel * 0.6;
             const Cp_liq = 3.5;
-            const Cp_sol = 1.5;
 
             const Q_sensible_F = F_rel * Cp_liq * (Tin - Tout);
             const Q_cryst = C_rel * Hcryst_rel * 5;
@@ -709,4 +784,3 @@
 </body>
 </html>
 
-</html>
