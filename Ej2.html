@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio Evaporador: Condensadores</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; background-color: #f8fafc; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in-section { opacity: 0; animation: fadeIn 0.8s ease-out forwards; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #374151; font-size: 0.875rem; }
+        input[type="range"] { width: 100%; cursor: pointer; accent-color: #0ea5e9; }
+        input[type="number"], select { padding: 0.5rem; border: 1px solid #D1D5DB; border-radius: 0.375rem; width: 100%; }
+        button, .styled-button-link { background-color: #38bdf8; color: #0c4a6e; padding: 0.5rem 1rem; border-radius: 0.375rem; font-weight: 600; transition: background-color 0.2s; display: inline-block; text-align: center; border: none; cursor: pointer;}
+        button:hover, .styled-button-link:hover { background-color: #0ea5e9; }
+        button:disabled { background-color: #bae6fd; cursor: not-allowed; }
+        h1 { color: #111827; font-size: 1.875rem; line-height: 2.25rem; font-weight: 700;}
+        h2 { color: #0c4a6e; font-size: 1.6rem; line-height: 2.1rem; font-weight: 700; border-bottom: 3px solid #7dd3fc; padding-bottom: 0.5rem; margin-top: 2.5rem; margin-bottom: 1.5rem; }
+        h3 { color: #0369a1; font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #bae6fd; padding-bottom: 0.25rem; }
+        h4 { color: #075985; font-size: 1.1rem; line-height: 1.6rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem;}
+        p, li { color: #374151; line-height: 1.75; margin-bottom: 1rem; }
+        strong { color: #1F2937; font-weight: 600; }
+        blockquote { border-left: 6px solid #38bdf8; padding: 1rem 1.5rem; margin: 1.5rem 0; color: #374151; background-color: #f0f9ff; border-radius: 0 0.5rem 0.5rem 0; box-shadow: 2px 2px 5px rgba(0,0,0,0.05); }
+        .section-bg-light { background-color: #f0f9ff; }
+        .section-bg-white { background-color: #FFFFFF; }
+        .instructional-text { font-size: 0.875rem; color: #4B5563; margin-top: 0.5rem; }
+        .output-box { margin-top: 1rem; padding: 0.75rem; background-color: #e0f2fe; border: 1px solid #bae6fd; border-radius: 0.375rem; font-size: 0.9rem; color: #0369a1; text-align: center; font-weight: 500; min-height: 40px; }
+        .output-box strong { color: #0c4a6e;}
+        .slider-label-container { display: flex; justify-content: space-between; font-size: 0.75rem; color: #6b7280; margin-top: 0.25rem; }
+        .interactive-block { margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1.5rem; border: 1px solid #e0f2fe; border-radius: 0.5rem; background-color: #ffffff; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); }
+        .interactive-block-light { margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1.5rem; border: 1px solid #e0f2fe; border-radius: 0.5rem; background-color: #f0f9ff; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); }
+        footer ul { list-style: none; padding-left: 0; }
+        footer li { margin-bottom: 0.75rem; }
+        footer a { color: #075985; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        .header-subtitle { font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; margin-top: 0.25rem; }
+        .footer-attribution { margin-top: 1.5rem; font-size: 0.875rem; line-height: 1.25rem; color: #6b7280; text-align: center; }
+        .math-block { margin: 1.5rem 0; padding: 1rem; background-color: #f0f9ff; border-left: 4px solid #38bdf8; font-size: 1.1rem; overflow-x: auto;}
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 antialiased">
+
+    <header class="bg-gradient-to-r from-sky-600 to-cyan-600 text-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <h1 class="text-2xl md:text-3xl font-bold">Exercici d'Evaporador d'Un Efecte</h1>
+            <p class="header-subtitle">Càlcul de Condensadors de Superfície i a Raig</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+
+        <section id="enunciado" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Enunciat de l'Exercici</h2>
+            <p>En un evaporador de circulació forçada d'un efecte, es concentren <strong>1800 kg/h</strong> de llet des d'un <strong>9%</strong> a un <strong>40%</strong> de sòlids en pes. La bomba de buit permet que la secció d'evaporació operi a <strong>12 kPa</strong> absoluts.</p>
+            <p>Per tal de condensar el vapor format (\(V_1\)), s'han previst dues solucions: utilitzar un condensador de superfície o un condensador a raig (baromètric). Es disposa d'aigua freda a <strong>10°C</strong> i després de la condensació no ha de sortir a una temperatura superior a <strong>25°C</strong>.</p>
+            <p>Calculeu:</p>
+            <ol class="list-alpha list-inside pl-4 font-medium">
+                <li>L'àrea de bescanvi (\(A\)) del condensador de superfície si el coeficient global de transmissió de calor és \(U = 2500 \, W/(m^2 \cdot K)\).</li>
+                <li>El cabal màssic d'aigua freda (\(\dot{m}_{aigua}\)) que es necessita en el condensador a raig.</li>
+            </ol>
+            <blockquote class="bg-sky-50 border-sky-300">
+                <strong>Esquema Conceptual:</strong><br>
+                Alimentació (L₀, x₀) entra a l'evaporador a P = 12 kPa. Surt producte concentrat (L₁, x₁) i vapor (V₁). Aquest vapor V₁ entra a un condensador (de superfície o a raig) on es condensa utilitzant aigua freda (entra a 10°C, surt a 25°C).
+            </blockquote>
+        </section>
+
+        <section id="paso1" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light dynamic-content">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Pas 1: Dades Inicials i Balanç de Matèria Global</h2>
+            <p>Primer, convertim el cabal d'alimentació a kg/s i definim les fraccions màssiques de sòlids:</p>
+            <ul class="list-disc list-inside pl-4 mb-4">
+                <li>Alimentació: \( L_0 = 1800 \, \text{kg/h} = \frac{1800}{3600} \, \text{kg/s} = 0.5 \, \text{kg/s} \)</li>
+                <li>Fracció sòlids alimentació: \( x_0 = 0.09 \)</li>
+                <li>Fracció sòlids producte: \( x_1 = 0.40 \)</li>
+            </ul>
+            <p>Apliquem un balanç de matèria per als sòlids (que no s'evaporen) per trobar el cabal de producte concentrat \(L_1\):</p>
+            <div class="math-block">
+            $$ L_0 \cdot x_0 = L_1 \cdot x_1 $$
+            $$ L_1 = L_0 \frac{x_0}{x_1} = (0.5 \, \text{kg/s}) \frac{0.09}{0.40} = 0.1125 \, \text{kg/s} $$
+            </div>
+            <p>Ara, per balanç global de massa, trobem el cabal de vapor generat \(V_1\):</p>
+             <div class="math-block">
+            $$ L_0 = L_1 + V_1 $$
+            $$ V_1 = L_0 - L_1 = 0.5 \, \text{kg/s} - 0.1125 \, \text{kg/s} = 0.3875 \, \text{kg/s} $$
+             </div>
+             <div class="output-box">
+                 Resultats Balanç Matèria: <strong>L₁ = 0.1125 kg/s</strong>, <strong>V₁ = 0.3875 kg/s</strong>
+             </div>
+        </section>
+
+        <section id="paso2" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Pas 2: Propietats del Vapor i de l'Aigua</h2>
+            <p>Necessitem les propietats termodinàmiques (temperatura de saturació, entalpies) a les condicions de treball. La pressió a l'evaporador (i, per tant, del vapor \(V_1\) que entra al condensador) és \(P_{abs} = 12 \, \text{kPa}\).</p>
+            <p>Consultant taules de vapor saturat per a aigua a 12 kPa:</p>
+            <ul class="list-disc list-inside pl-4 mb-4">
+                <li>Temperatura de saturació: \( T_{sat}(12 \text{kPa}) \approx 49.4 \, ^\circ C \). Arrodonirem a \( T_1 = 50 \, ^\circ C \) per simplicitat i consistència amb l'exercici original.</li>
+                <li>Entalpia del vapor saturat a 50°C: \( H_1 = h_v(50^\circ C) \approx 2592 \, \text{kJ/kg} \)</li>
+                <li>Calor latent de vaporització a 50°C: \( \lambda_1 = h_{vg}(50^\circ C) \approx 2383 \, \text{kJ/kg} \) (Aquesta és la calor que cal retirar per condensar el vapor).</li>
+            </ul>
+            <p>Per a l'aigua de refrigeració, considerem líquid subrefredat. Les seves entalpies es poden aproximar per les del líquid saturat a la temperatura corresponent:</p>
+             <ul class="list-disc list-inside pl-4 mb-4">
+                <li>Aigua freda (entrada): \( T_{ae} = 10 \, ^\circ C \implies h_{ae} \approx h_f(10^\circ C) \approx 42.0 \, \text{kJ/kg} \)</li>
+                <li>Aigua calenta (sortida): \( T_{as} = 25 \, ^\circ C \implies h_{as} \approx h_f(25^\circ C) \approx 104.8 \, \text{kJ/kg} \) (Valor de l'exercici original: 104.5 kJ/kg, utilitzarem aquest per consistència).</li>
+            </ul>
+             <blockquote class="bg-sky-50 border-sky-300">
+                 <strong>Nota:</strong> En un càlcul rigorós, s'utilitzarien interpolacions precises de taules de vapor o funcions termodinàmiques. Aquí usem valors arrodonits/donats per seguir l'exemple.
+             </blockquote>
+        </section>
+
+        <section id="paso3" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light dynamic-content">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Pas 3: Càlcul del Condensador de Superfície (Apartat a)</h2>
+            <p>En un condensador de superfície, el vapor \(V_1\) i l'aigua de refrigeració no es barregen. La calor transferida (\(Q\)) és la calor latent del vapor que condensa:</p>
+             <div class="math-block">
+            $$ Q = V_1 \cdot \lambda_1 = (0.3875 \, \text{kg/s}) \cdot (2383 \, \text{kJ/kg}) = 923.44 \, \text{kJ/s} = 923.44 \, \text{kW} $$
+            $$ Q = 923440 \, W $$
+             </div>
+            <p>Per calcular l'àrea de transferència de calor (\(A\)), necessitem la diferència mitjana logarítmica de temperatures (\(\Delta T_{lm}\)). Les diferències de temperatura als extrems de l'intercanviador són:</p>
+             <ul class="list-disc list-inside pl-4 mb-4">
+                 <li>Extrem calent (entrada vapor, sortida aigua): \( \Delta T_1 = T_{sat, vapor} - T_{as} = 50^\circ C - 25^\circ C = 25^\circ C \)</li>
+                 <li>Extrem fred (sortida condensat, entrada aigua): \( \Delta T_2 = T_{sat, vapor} - T_{ae} = 50^\circ C - 10^\circ C = 40^\circ C \)</li>
+             </ul>
+             <div class="math-block">
+             $$ \Delta T_{lm} = \frac{\Delta T_2 - \Delta T_1}{\ln(\Delta T_2 / \Delta T_1)} = \frac{40 - 25}{\ln(40 / 25)} = \frac{15}{\ln(1.6)} \approx \frac{15}{0.470} \approx 31.91 \, ^\circ C \text{ (o K)} $$
+             </div>
+             <p>Ara podem calcular l'àrea utilitzant l'equació de disseny \( Q = U \cdot A \cdot \Delta T_{lm} \):</p>
+              <div class="math-block">
+             $$ A = \frac{Q}{U \cdot \Delta T_{lm}} = \frac{923440 \, W}{(2500 \, W/(m^2 \cdot K)) \cdot (31.91 \, K)} \approx 11.58 \, m^2 $$
+              </div>
+              <div class="output-box">
+                  Resultat Apartat (a): <strong>Àrea Condensador Superfície \(A \approx 11.6 \, m^2\)</strong>
+              </div>
+        </section>
+
+        <section id="paso4" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Pas 4: Càlcul del Condensador a Raig (Apartat b)</h2>
+            <p>En un condensador a raig (o baromètric), el vapor \(V_1\) es barreja directament amb l'aigua freda. La mescla resultant surt a la temperatura final de l'aigua (\(T_{as} = 25^\circ C\)). Apliquem un balanç d'energia al condensador, considerant-lo adiabàtic i sense treball:</p>
+            $$ \text{Energia Entrant} = \text{Energia Sortint} $$
+            $$ V_1 H_1 + \dot{m}_{aigua} h_{ae} = (V_1 + \dot{m}_{aigua}) h_{as} $$
+            <p>Reorganitzem per aïllar el cabal d'aigua \(\dot{m}_{aigua}\):</p>
+            $$ \dot{m}_{aigua} h_{ae} - \dot{m}_{aigua} h_{as} = V_1 h_{as} - V_1 H_1 $$
+            $$ \dot{m}_{aigua} (h_{ae} - h_{as}) = V_1 (h_{as} - H_1) $$
+             <div class="math-block">
+            $$ \dot{m}_{aigua} = V_1 \frac{H_1 - h_{as}}{h_{as} - h_{ae}} $$
+             </div>
+            <p>Substituïm els valors d'entalpia (en J/kg per consistència d'unitats):</p>
+             <ul class="list-disc list-inside pl-4 mb-4">
+                 <li>\( H_1 = 2592 \, \text{kJ/kg} = 2.592 \times 10^6 \, \text{J/kg} \)</li>
+                 <li>\( h_{ae} = 42.0 \, \text{kJ/kg} = 4.20 \times 10^4 \, \text{J/kg} \)</li>
+                 <li>\( h_{as} = 104.5 \, \text{kJ/kg} = 1.045 \times 10^5 \, \text{J/kg} \)</li>
+                 <li>\( V_1 = 0.3875 \, \text{kg/s} \)</li>
+             </ul>
+              <div class="math-block">
+             $$ \dot{m}_{aigua} = (0.3875 \, \text{kg/s}) \frac{(2.592 \times 10^6 - 1.045 \times 10^5) \, \text{J/kg}}{(1.045 \times 10^5 - 4.20 \times 10^4) \, \text{J/kg}} $$
+             $$ \dot{m}_{aigua} = (0.3875) \frac{2.4875 \times 10^6}{0.625 \times 10^5} \approx (0.3875) \times 39.8 \approx 15.42 \, \text{kg/s} $$
+              </div>
+               <div class="output-box">
+                   Resultat Apartat (b): <strong>Cabal Aigua Condensador a Raig \(\dot{m}_{aigua} \approx 15.4 \, kg/s\)</strong>
+               </div>
+        </section>
+
+        <section id="interactivo" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light dynamic-content">
+            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Aplicació Interactiva: Simulador de l'Evaporador</h2>
+            <p class="instructional-text mb-4">Modifica els paràmetres d'entrada per veure com afecten els resultats del balanç de matèria i els càlculs dels condensadors. Les propietats del vapor s'aproximen basant-se en la pressió.</p>
+
+            <div class="interactive-block-light">
+                <h3 class="text-xl font-semibold mb-4 text-center text-sky-700">Paràmetres d'Entrada</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                    <div>
+                        <label for="sim-L0-input">Alimentació (L₀, kg/h):</label>
+                        <input type="number" id="sim-L0-input" value="1800" step="100" min="100">
+                    </div>
+                    <div>
+                        <label for="sim-x0-input">Conc. Sòlids Inicial (x₀, %):</label>
+                        <input type="number" id="sim-x0-input" value="9" step="1" min="1" max="30">
+                    </div>
+                    <div>
+                        <label for="sim-x1-input">Conc. Sòlids Final (x₁, %):</label>
+                        <input type="number" id="sim-x1-input" value="40" step="1" min="10" max="80">
+                    </div>
+                    <div>
+                        <label for="sim-Pabs-input">Pressió Evaporador (Pabs, kPa):</label>
+                        <input type="number" id="sim-Pabs-input" value="12" step="1" min="5" max="50">
+                    </div>
+                    <div>
+                        <label for="sim-Tae-input">Temp. Aigua Entrada (Tae, °C):</label>
+                        <input type="number" id="sim-Tae-input" value="10" step="1" min="0" max="20">
+                    </div>
+                     <div>
+                        <label for="sim-Tas-input">Temp. Aigua Sortida (Tas, °C):</label>
+                        <input type="number" id="sim-Tas-input" value="25" step="1" min="15" max="45">
+                    </div>
+                     <div class="md:col-span-1 lg:col-span-3">
+                        <label for="sim-U-input">Coef. Global Transf. Calor (U, W/m²K):</label>
+                        <input type="number" id="sim-U-input" value="2500" step="100" min="500">
+                    </div>
+                </div>
+                 <div class="text-center">
+                     <button id="sim-calculate-btn">Recalcular Resultats</button>
+                 </div>
+
+                 <h3 class="text-xl font-semibold mt-8 mb-4 text-center text-sky-700">Resultats Calculats</h3>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                     <div class="output-box"><strong>Balanç Matèria:</strong><br> L₁ = <span id="res-L1">0.11</span> kg/s | V₁ = <span id="res-V1">0.39</span> kg/s</div>
+                     <div class="output-box"><strong>Propietats Vapor (aprox):</strong><br> Tsat ≈ <span id="res-Tsat">50.0</span> °C | λ ≈ <span id="res-lambda">2383</span> kJ/kg | H₁ ≈ <span id="res-H1">2592</span> kJ/kg</div>
+                     <div class="output-box"><strong>Cond. Superfície:</strong><br> Q = <span id="res-Q">923</span> kW | ΔTlm ≈ <span id="res-DTlm">31.9</span> °C | Àrea (A) ≈ <span id="res-A">11.6</span> m²</div>
+                     <div class="output-box"><strong>Cond. Raig:</strong><br> Cabal Aigua (ṁ) ≈ <span id="res-mdot">15.4</span> kg/s</div>
+                 </div>
+            </div>
+        </section>
+      <section class="mt-12 text-center grid grid-cols-2 gap-4">
+            <a href="https://marquezrn03.github.io/Cristalizacion/" class="styled-button-link">← Previous: Cristalizacion</a>
+            <a href="Chap3.html" class="styled-button-link">Next: To be completed →</a>
+        </section>
+      
+    </main>
+
+     <footer class="mt-16 pt-8 border-t border-gray-300 text-sm text-gray-600">
+         <p class="footer-attribution">Exercici d'Evaporadors - Resolució i Simulació</p>
+            </footer>
+
+    <script>
+        const sections_evap = document.querySelectorAll('.fade-in-section');
+        const observerOptions_evap = { root: null, rootMargin: '0px', threshold: 0.1 };
+        const observerCallback_evap = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-section');
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
+        const observer_evap = new IntersectionObserver(observerCallback_evap, observerOptions_evap);
+        sections_evap.forEach(section => { observer_evap.observe(section); });
+
+        function getSteamProps(pressure_kPa) {
+            const p = Math.max(5, Math.min(101.3, pressure_kPa));
+            const Tsat = 49.4 + 0.05 * p;
+            const lambda = (2501 - 2.36 * Tsat) * 1000;
+            const H_vapor = (2501 + 1.88 * Tsat) * 1000;
+            return { Tsat, lambda, H_vapor };
+        }
+
+        function getWaterEnthalpy(temp_C) {
+            return 4.18 * temp_C * 1000;
+        }
+
+        function calculateLogMeanTempDiff(Th_in, Th_out, Tc_in, Tc_out) {
+            const dt1 = Th_in - Tc_out;
+            const dt2 = Th_out - Tc_in;
+             if (Math.abs(dt1 - dt2) < 1e-3 || dt1 <= 0 || dt2 <= 0) {
+                 return (dt1 + dt2) / 2;
+             }
+            return (dt1 - dt2) / Math.log(dt1 / dt2);
+        }
+
+        function performCalculations() {
+            try {
+                const L0_kgh = parseFloat(document.getElementById('sim-L0-input').value);
+                const x0_pct = parseFloat(document.getElementById('sim-x0-input').value);
+                const x1_pct = parseFloat(document.getElementById('sim-x1-input').value);
+                const Pabs_kPa = parseFloat(document.getElementById('sim-Pabs-input').value);
+                const Tae_C = parseFloat(document.getElementById('sim-Tae-input').value);
+                const Tas_C = parseFloat(document.getElementById('sim-Tas-input').value);
+                const U_W_m2K = parseFloat(document.getElementById('sim-U-input').value);
+
+                if (isNaN(L0_kgh) || isNaN(x0_pct) || isNaN(x1_pct) || isNaN(Pabs_kPa) || isNaN(Tae_C) || isNaN(Tas_C) || isNaN(U_W_m2K) ||
+                    L0_kgh <= 0 || x0_pct <= 0 || x1_pct <= x0_pct || Pabs_kPa <= 0 || Tas_C <= Tae_C || U_W_m2K <= 0) {
+                    throw new Error("Entrada invàlida. Verifiqui valors (L0>0, 0<x0<x1, P>0, Tas>Tae, U>0).");
+                }
+
+                const L0 = L0_kgh / 3600;
+                const x0 = x0_pct / 100;
+                const x1 = x1_pct / 100;
+
+                const L1 = L0 * (x0 / x1);
+                const V1 = L0 - L1;
+
+                const { Tsat, lambda, H_vapor } = getSteamProps(Pabs_kPa);
+                const h_ae = getWaterEnthalpy(Tae_C);
+                const h_as = getWaterEnthalpy(Tas_C);
+
+                const Q = V1 * lambda;
+                const DTlm = calculateLogMeanTempDiff(Tsat, Tsat, Tae_C, Tas_C);
+                const Area = (U_W_m2K > 0 && DTlm > 1e-3) ? Q / (U_W_m2K * DTlm) : NaN;
+
+                const mdot_agua = (h_as > h_ae) ? V1 * (H_vapor - h_as) / (h_as - h_ae) : NaN;
+
+                document.getElementById('res-L1').textContent = L1.toFixed(2);
+                document.getElementById('res-V1').textContent = V1.toFixed(2);
+                document.getElementById('res-Tsat').textContent = Tsat.toFixed(1);
+                document.getElementById('res-lambda').textContent = (lambda / 1000).toFixed(0);
+                document.getElementById('res-H1').textContent = (H_vapor / 1000).toFixed(0);
+                document.getElementById('res-Q').textContent = (Q / 1000).toFixed(0);
+                document.getElementById('res-DTlm').textContent = DTlm.toFixed(1);
+                document.getElementById('res-A').textContent = isNaN(Area) ? "N/A" : Area.toFixed(1);
+                document.getElementById('res-mdot').textContent = isNaN(mdot_agua) ? "N/A" : mdot_agua.toFixed(1);
+
+            } catch (error) {
+                 document.getElementById('res-L1').textContent = "Error";
+                 document.getElementById('res-V1').textContent = "Error";
+                 document.getElementById('res-Tsat').textContent = "Error";
+                 document.getElementById('res-lambda').textContent = "Error";
+                 document.getElementById('res-H1').textContent = "Error";
+                 document.getElementById('res-Q').textContent = "Error";
+                 document.getElementById('res-DTlm').textContent = "Error";
+                 document.getElementById('res-A').textContent = "Error";
+                 document.getElementById('res-mdot').textContent = "Error";
+                 alert(`Error en el càlcul: ${error.message}`);
+            }
+        }
+
+        const calcButton = document.getElementById('sim-calculate-btn');
+        if(calcButton) {
+            calcButton.addEventListener('click', performCalculations);
+        }
+        window.addEventListener('load', performCalculations);
+
+    </script>
+
+</body>
+</html>
