@@ -73,7 +73,71 @@
                 <strong>Consideració Clau:</strong> Les solucions de NaOH presenten un increment significatiu del punt d'ebullició (Boiling Point Elevation, BPE) respecte a l'aigua pura a la mateixa pressió. Això afectarà la temperatura real d'ebullició (\(t_1\)) i la força impulsora per a la transferència de calor (\(\Delta T\)).
             </blockquote>
         </section>
+<section id="enunciat" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white">
+            <h2 class="text-sky-800 border-b-2 border-sky-300 pb-2 mb-6">Plantejament del Problema</h2> <p>S'analitza un evaporador de simple efecte i tubs llargs destinat a concentrar una solució aquosa d'hidròxid sòdic (NaOH). Les condicions operatives i les propietats especificades són les següents:</p>
+            <ul class="list-disc list-inside pl-4 space-y-2 mb-4">
+                <li><strong>Alimentació (L₀):</strong> Cabal màssic de 15000 kg/h, concentració inicial (\(x_0\)) del 10% en massa de NaOH, temperatura (\(t_0\)) de 40\(^\circ\)C.</li>
+                <li><strong>Producte Concentrat (L₁):</strong> Concentració final desitjada (\(x_1\)) del 50% en massa de NaOH.</li>
+                <li><strong>Fluid Calefactor (V₀):</strong> Vapor d'aigua saturat a una pressió manomètrica de 5 atm.</li>
+                <li><strong>Condicions d'Evaporació (P₁):</strong> Pressió absoluta en la cambra de vaporització de 620 mmHg.</li>
+                <li><strong>Transferència de Calor (U₀):</strong> Coeficient global estimat de 1860 W/(m\(^2\)·K).</li>
+                <li><strong>Suposició Clau:</strong> L'evaporador opera en estat estacionari i es considera adiabàtic (sense pèrdues de calor a l'entorn).</li>
+            </ul>
+            <p><strong>Objectius de l'Anàlisi:</strong> Determinar les següents magnituds operatives clau:</p>
+            <ol class="list-alpha list-inside pl-4 space-y-1 font-medium">
+                <li>Capacitat d'evaporació (cabal de dissolvent evaporat, \(V_1\)).</li>
+                <li>Potència calorífica transferida (\(Q\)).</li>
+                <li>Cabal màssic de vapor calefactor requerit (\(V_0\)).</li>
+                <li>Àrea de transferència de calor necessària (\(A_0\)).</li>
+                <li>Economia del procés d'evaporació (\(E\)).</li>
+            </ol>
+        </section>
 
+        <section id="resolucio" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white">
+            <h2 class="text-sky-800 border-b-2 border-sky-300 pb-2 mb-6">Metodologia de Resolució i Càlculs Detallats</h2>
+
+            <div class="calculation-step">
+                <h3>Pas 0: Representació Esquemàtica i Conversió d'Unitats</h3>
+                <div class="figure-placeholder">
+                     <span class="figure-title">Esquema Conceptual de l'Evaporador</span>
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="300" height="225" class="my-2">
+                        <rect x="100" y="50" width="200" height="200" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="2"/>
+                        <text x="200" y="40" font-family="Inter, sans-serif" font-size="12" text-anchor="middle">Evaporador</text>
+                        <line x1="30" y1="150" x2="100" y2="150" stroke="#374151" stroke-width="1.5" marker-end="url(#arrow)"/>
+                        <text x="65" y="145" font-family="Inter, sans-serif" font-size="10" text-anchor="middle">L₀, x₀, t₀, h₀</text>
+                        <line x1="150" y1="280" x2="150" y2="250" stroke="#ef4444" stroke-width="1.5" marker-end="url(#arrow)"/>
+                        <text x="145" y="265" font-family="Inter, sans-serif" font-size="10" text-anchor="end">V₀, P₀, H₀</text>
+                        <line x1="250" y1="250" x2="250" y2="280" stroke="#ef4444" stroke-width="1.5" marker-end="url(#arrow)"/>
+                        <text x="255" y="265" font-family="Inter, sans-serif" font-size="10" text-anchor="start">V₀', h₀*</text>
+                        <line x1="200" y1="50" x2="200" y2="20" stroke="#60a5fa" stroke-width="1.5" marker-end="url(#arrow)"/>
+                        <text x="205" y="35" font-family="Inter, sans-serif" font-size="10" text-anchor="start">V₁, H₁</text>
+                        <line x1="300" y1="150" x2="370" y2="150" stroke="#374151" stroke-width="1.5" marker-end="url(#arrow)"/>
+                        <text x="335" y="145" font-family="Inter, sans-serif" font-size="10" text-anchor="middle">L₁, x₁, t₁, h₁</text>
+                        <defs>
+                          <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#374151" />
+                          </marker>
+                        </defs>
+                      </svg>
+                    <p class="text-sm mt-2">L₀: Alimentació, L₁: Concentrat, V₁: Vapor Evaporat, V₀: Vapor Calefactor, V₀': Condensat</p>
+                </div>
+                <p>És fonamental establir un sistema d'unitats consistent, preferiblement el Sistema Internacional (SI), per a tots els càlculs posteriors.</p>
+                <div class="explanation">
+                    <p><strong>Cabal d'alimentació (\(L_0\)):</strong></p>
+                    <p>\( L_0 = 15000 \, \frac{\text{kg}}{\text{h}} \times \frac{1 \, \text{h}}{3600 \, \text{s}} = \) <span class="value-highlight">4.167</span> \( \, \text{kg/s} \)</p>
+                    <p><strong>Concentracions (fraccions màssiques, \(x\)):</strong></p>
+                    <p>\( x_0 = 10\% = \) <span class="value-highlight">0.10</span></p>
+                    <p>\( x_1 = 50\% = \) <span class="value-highlight">0.50</span></p>
+                    <p><strong>Pressió vapor calefactor (\(P_0\)):</strong></p>
+                    <p>\( P_0 = 5 \, \text{atm} \times \frac{101325 \, \text{Pa}}{1 \, \text{atm}} = 506625 \, \text{Pa} = \) <span class="value-highlight">506.6</span> \( \, \text{kPa} \)</p>
+                    <p><strong>Pressió d'evaporació (\(P_1\)):</strong></p>
+                    <p>\( P_1 = 620 \, \text{mmHg} \times \frac{101325 \, \text{Pa}}{760 \, \text{mmHg}} = 82659 \, \text{Pa} = \) <span class="value-highlight">82.66</span> \( \, \text{kPa} \)</p>
+                    <p><strong>Temperatura d'alimentació (\(t_0\)):</strong> \( t_0 = \) <span class="value-highlight">40</span> \( \, ^\circ\text{C} \)</p>
+                    <p><strong>Coeficient global (\(U_0\)):</strong> \( U_0 = \) <span class="value-highlight">1860</span> \( \, \text{W/(m}^2\text{·K)} \)</p>
+                </div>
+            </div>
+
+        
         <section id="paso1" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light dynamic-content">
             <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Pas 1: Balanços de Matèria</h2>
             <p>Primer, definim els cabals i composicions i convertim unitats:</p>
