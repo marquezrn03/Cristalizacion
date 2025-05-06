@@ -148,15 +148,10 @@
                 <p>El cost anual total és la suma dels costos fixos anuals (relacionats amb la inversió) i els costos variables anuals (cost del vapor primari). El cost de mà d'obra, en ser constant, no influeix en la determinació del \(N\) òptim i pot ser omès de la funció a optimitzar.</p>
                 <div class="explanation">
                     <p><strong>Costos Fixos Anuals (\(C_F\)):</strong> Corresponen al 45% del cost d'inversió.</p>
-                    <p>\( C_F = 0.45 \times C_{\text{inv}} = 0.45 \times (36000 \cdot N \, €) \)</p>
-                    <p>\( C_F = 16200 \cdot N \, € \)</p>
-                    <p>El cost fix anual és: <span class="value-highlight">\(16200 \cdot N\)</span> €/any.</p>
+                   <p>El cost fix anual és: <span class="value-highlight">\(16200 \cdot N\)</span> €/any.</p>
 
                     <p class="mt-4"><strong>Costos Variables Anuals (\(C_V\)):</strong> Cost del vapor primari consumit.</p>
-                     <p>\( C_V = V_0 \, (\text{kg/any}) \times C_{\text{vapor}} \, (€/\text{kg}) \)</p>
-                    <p>\( C_V = \left( \frac{4.7619 \times 10^7}{N} \right) \, \text{kg/any} \times (0.0114 \, €/\text{kg}) \)</p>
-                     <p>\( C_V = \frac{542857}{N} \, €/\text{any} \)</p>
-                    <p>El cost variable anual és: <span class="value-highlight">\( \frac{542857}{N} \)</span> €/any.</p>
+                      <p>El cost variable anual és: <span class="value-highlight">\( \frac{542857}{N} \)</span> €/any.</p>
                      <p class="reference-note">(Nota: El PDF obté 542857.1425 / N, la petita diferència és per l'arrodoniment de V₀ intermedi. Utilitzarem el valor calculat aquí.)</p>
 
                     <p class="mt-4"><strong>Cost Anual Total a Optimitzar (\(C_T'\)):</strong> Suma de costos fixos i variables dependents de \(N\).</p>
@@ -197,7 +192,7 @@
                      <p>\( C_T'(6) = \) <span class="value-highlight">187676.2</span> €/any.</p>
 
                      <p class="mt-4"><strong>Comparació:</strong></p>
-                     <p>El cost anual per a \(N=6\) (\(187676.2 \, €\)) és inferior al cost per a \(N=5\) (\(189571.4 \, €\)).</p>
+                     <p>El cost anual per a \(N=6\) 187676.2 €) és inferior al cost per a \(N=5\) 189571.4 €.</p>
                      <p class="mt-4"><strong>Conclusió:</strong> El nombre òptim d'efectes, considerant que ha de ser un nombre enter, és \(N_{\text{opt}} = 6\).</p>
 
                      <table class="table-auto">
