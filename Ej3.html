@@ -244,54 +244,17 @@
              <p>Un valor d'economia inferior a 1 és típic per a evaporadors d'un sol efecte, ja que la calor latent del vapor generat (\(V_1\)) sol ser lleugerament superior a la del vapor de calefacció (\(V_0\)) degut a la menor pressió, i a més cal aportar calor sensible per escalfar l'alimentació.</p>
         </section>
 
-        <section id="interactivo" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light dynamic-content">
-            <h2 class="text-sky-700 border-b-2 border-sky-200 pb-2 mb-6">Aplicació Interactiva: Simulador de l'Evaporador (amb BPE)</h2>
-            <p class="instructional-text mb-4">Modifica els paràmetres d'entrada per veure com afecten els resultats. Les propietats termodinàmiques i el BPE s'estimen amb correlacions simplificades.</p>
-
-            <div class="interactive-block-light">
-                <h3 class="text-xl font-semibold mb-4 text-center text-sky-700">Paràmetres d'Entrada</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-                    <div>
-                        <label for="sim-L0-input">Alimentació (L₀, kg/h):</label>
-                        <input type="number" id="sim-L0-input" value="15000" step="1000" min="1000">
-                    </div>
-                    <div>
-                        <label for="sim-x0-input">Conc. Inicial (x₀, % NaOH):</label>
-                        <input type="number" id="sim-x0-input" value="10" step="1" min="5" max="20">
-                    </div>
-                    <div>
-                        <label for="sim-x1-input">Conc. Final (x₁, % NaOH):</label>
-                        <input type="number" id="sim-x1-input" value="50" step="1" min="25" max="60">
-                    </div>
-                    <div>
-                        <label for="sim-P0-input">Pressió Vapor Calef. (P₀, atm abs):</label>
-                        <input type="number" id="sim-P0-input" value="5" step="0.5" min="1.5" max="10">
-                    </div>
-                     <div>
-                        <label for="sim-P1-input">Pressió Evaporador (P₁, mmHg abs):</label>
-                        <input type="number" id="sim-P1-input" value="620" step="10" min="100" max="760">
-                    </div>
-                     <div>
-                        <label for="sim-t0-input">Temp. Alimentació (t₀, °C):</label>
-                        <input type="number" id="sim-t0-input" value="40" step="5" min="10" max="90">
-                    </div>
-                     <div class="md:col-span-1 lg:col-span-3">
-                        <label for="sim-U-input">Coef. Global Transf. Calor (U, W/m²K):</label>
-                        <input type="number" id="sim-U-input" value="1860" step="100" min="500">
-                    </div>
-                </div>
-                 <div class="text-center">
-                     <button id="sim-calculate-btn">Recalcular Resultats</button>
-                 </div>
-
-                 <h3 class="text-xl font-semibold mt-8 mb-4 text-center text-sky-700">Resultats Calculats</h3>
-                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                     <div class="output-box"><strong>Balanç Matèria:</strong><br> L₁ = <span id="res-L1">0.83</span> kg/s<br>V₁ = <span id="res-V1">3.33</span> kg/s</div>
-                     <div class="output-box"><strong>Condicions Operació:</strong><br> T₀ ≈ <span id="res-T0">152</span> °C<br> t₁ ≈ <span id="res-t1">136</span> °C (BPE ≈ <span id="res-BPE">42</span> °C)</div>
-                     <div class="output-box"><strong>Energia i Àrea:</strong><br> Q ≈ <span id="res-Q">9.0</span> MW<br> V₀ ≈ <span id="res-V0">4.3</span> kg/s<br> A₀ ≈ <span id="res-A0">300</span> m²</div>
-                     <div class="output-box md:col-span-3"><strong>Economia:</strong> E₁ = <span id="res-E1">0.78</span> kg vap./kg vapor</div>
-                 </div>
-            </div>
+        <section id="resum" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light">
+            <h2 class="text-sky-800 border-b-2 border-sky-300 pb-2 mb-6">Resum dels Resultats de l'Anàlisi</h2>
+            <p>Els resultats clau obtinguts per a les condicions operatives especificades són:</p>
+             <div class="output-grid">
+                 <div class="output-item"><span class="output-label">a) Capacitat Evaporació (\(V_1\))</span><span class="output-value">3.33</span><span class="output-unit">kg/s</span></div>
+                 <div class="output-item"><span class="output-label">b) Potència Calorífica (\(Q\))</span><span class="output-value">9027</span><span class="output-unit">kW</span></div>
+                 <div class="output-item"><span class="output-label">c) Cabal Vapor Primari (\(V_0\))</span><span class="output-value">4.28</span><span class="output-unit">kg/s</span></div>
+                 <div class="output-item"><span class="output-label">d) Àrea Bescanvi (\(A_0\))</span><span class="output-value">300</span><span class="output-unit">m\(^2\)</span></div>
+                 <div class="output-item"><span class="output-label">e) Economia (\(E\))</span><span class="output-value">0.78</span><span class="output-unit"></span></div>
+             </div>
+             <p class="mt-6 explanation">Aquesta anàlisi detallada, basada en balanços de matèria i energia i considerant les propietats termodinàmiques reals de la solució (BPE, entalpies específiques), proporciona una base sòlida per al disseny i l'avaluació del rendiment de l'evaporador. La consideració de l'increment del punt d'ebullició és particularment crítica per a l'estimació correcta de l'àrea de transferència de calor.</p>
         </section>
 
     </main>
