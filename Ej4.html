@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimització Evaporador Múltiple Efecte (Exercici 7.8)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['\\(', '\\)']], // Use \( \) for inline math
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            tags: 'ams' // Per numeració d'equacions si calgués
+          },
+          svg: {
+            fontCache: 'global'
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'], // Evitar processar dins d'aquestes etiquetes
+            ignoreHtmlClass: 'tex2jax_ignore',
+            processHtmlClass: 'tex2jax_process'
+          }
+        };
+        </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async id="MathJax-script"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estils (sense canvis respecte a la versió anterior) */
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; background-color: #f8fafc; }
+        h1 { color: #111827; font-size: 1.875rem; line-height: 2.25rem; font-weight: 700;}
+        h2 { color: #0c4a6e; font-size: 1.6rem; line-height: 2.1rem; font-weight: 700; border-bottom: 3px solid #7dd3fc; padding-bottom: 0.5rem; margin-top: 2.5rem; margin-bottom: 1.5rem; }
+        h3 { color: #0369a1; font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #bae6fd; padding-bottom: 0.25rem; }
+        p, li { color: #374151; line-height: 1.75; margin-bottom: 1rem; }
+        strong { color: #1F2937; font-weight: 600; }
+        .section-bg-light { background-color: #f0f9ff; }
+        .section-bg-white { background-color: #FFFFFF; }
+        .output-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .output-item { background-color: #e0f2fe; border: 1px solid #bae6fd; border-radius: 0.375rem; padding: 0.75rem; text-align: center; }
+        .output-label { display: block; font-size: 0.8rem; color: #075985; margin-bottom: 0.25rem; font-weight: 500; }
+        .output-value { font-size: 1.1rem; font-weight: 600; color: #0c4a6e; word-wrap: break-word; }
+        .output-unit { font-size: 0.75rem; color: #0369a1; margin-left: 0.25rem;}
+        .math-block { margin: 1.5rem 0; padding: 1rem; background-color: #f0f9ff; border-left: 4px solid #38bdf8; font-size: 1.1rem; overflow-x: auto;}
+        .footer-attribution { margin-top: 1.5rem; font-size: 0.875rem; line-height: 1.25rem; color: #6b7280; text-align: center; }
+        .calculation-step { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #e5e7eb;}
+        .calculation-step:last-child { border-bottom: none; }
+        .explanation { background-color: #f9fafb; padding: 1rem; border-radius: 0.375rem; border: 1px solid #e5e7eb; margin-top: 1rem; font-size: 0.95rem;}
+        .explanation p, .explanation li { margin-bottom: 0.75rem; }
+        .figure-placeholder {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            padding: 1.5rem;
+            margin: 1.5rem auto;
+            text-align: center;
+            color: #4b5563;
+            max-width: 600px;
+        }
+        .figure-title { font-weight: 600; margin-bottom: 0.75rem; color: #1f2937; }
+        .value-highlight { font-weight: 600; color: #047857; /* Verd fosc */ }
+        .unit-conversion { font-size: 0.85rem; color: #6b7280; margin-left: 0.5rem; }
+        .assumption { font-style: italic; color: #4b5563; margin-top: 0.5rem; font-size: 0.9rem; }
+        .reference-note { font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; }
+        /* Assegura que MathJax tingui espai per renderitzar */
+         mjx-container { display: inline-block !important; margin: 0 0.1em;}
+         table { width: auto; margin: 1.5rem auto; border-collapse: collapse; }
+         th, td { border: 1px solid #d1d5db; padding: 0.5rem 0.75rem; text-align: center; }
+         th { background-color: #e0f2fe; color: #0c4a6e; font-weight: 600; }
+         td { background-color: #ffffff; }
+         .original-enunciat { background-color: #fffbeb; border: 1px solid #fef3c7; padding: 1rem; border-radius: 0.5rem; margin-bottom: 2rem; font-style: italic; color: #713f12; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 antialiased">
+
+    <header class="bg-gradient-to-r from-sky-700 to-cyan-700 text-white shadow-md">
+        <div class="container mx-auto px-6 py-5">
+            <h1 class="text-2xl md:text-3xl font-bold">Optimització Econòmica d'un Evaporador de Múltiple Efecte</h1>
+            <p class="text-lg font-semibold mt-1">Determinació del Nombre Òptim d'Efectes (Basat en Exercici 7.8 TP)</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+
+        <section id="enunciat-original" class="original-enunciat">
+             <h3 class="!mt-0 !mb-3 !border-none text-amber-800 font-semibold">Enunciat Original (Exercici 7.8)</h3>
+             <p class="!mb-0">Es concentren 200 t/dia d’una dissolució salina del 10 al 35% (en massa) en un evaporador de múltiple efecte, que opera 300 dies/any. L’evaporador té un cost (IVA inclòs) de 36000·N € (essent N el nombre d’efectes). El cost del vapor calefactor (i.e. vapor primari) és de 1,14 cents/kg. Es pot considerar que l’economia d’evaporació és igual a 0,90·N. Se sap que els interessos del capital, l’amortització i altres càrregues financeres impliquen anualment un 45% de la inversió i que la mà d’obra té un cost constant i independent del nombre d’efectes. Calculeu el nombre òptim d’efectes.</p>
+        </section>
+
+        <section id="plantejament" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white">
+            <h2 class="text-sky-800 border-b-2 border-sky-300 pb-2 mb-6">Plantejament del Problema</h2>
+            <p>S'analitza un evaporador de simple efecte i tubs llargs destinat a concentrar una solució aquosa d'hidròxid sòdic (NaOH). Les condicions operatives i les propietats especificades són les següents:</p>
+            <ul class="list-disc list-inside pl-4 space-y-2 mb-4">
+                 <li><strong>Procés:</strong> Concentració de 200 t/dia de dissolució salina des del 10% fins al 35% en massa.</li>
+                 <li><strong>Operació Anual:</strong> 300 dies/any.</li>
+                 <li><strong>Cost d'Inversió (\(C_{\text{inv}}\)):</strong> \( 36000 \cdot N \) € (IVA inclòs), on \(N\) és el nombre d'efectes.</li>
+                 <li><strong>Cost del Vapor Primari (\(C_{\text{vapor}}\)):</strong> 1.14 cèntims/kg = 0.0114 €/kg.</li>
+                 <li><strong>Economia d'Evaporació (\(E\)):</strong> S'estima com \( E = 0.90 \cdot N \).</li>
+                 <li><strong>Costos Fixos Anuals (\(C_{\text{fixos, anuals}}\)):</strong> Interessos, amortització i altres càrregues financeres representen el 45% de la inversió anual.</li>
+                 <li><strong>Cost de Mà d'Obra:</strong> Es considera constant i independent del nombre d'efectes (no afectarà l'optimització respecte a \(N\)).</li>
+            </ul>
+            <p><strong>Objectiu:</strong> Calcular el nombre òptim d'efectes (\(N_{\text{opt}}\)) que minimitza el cost anual total variable (inversió + vapor).</p>
+        </section>
+
+        <section id="resolucio" class="mb-12 p-6 rounded-lg shadow-lg section-bg-white">
+            <h2 class="text-sky-800 border-b-2 border-sky-300 pb-2 mb-6">Metodologia i Càlculs Detallats</h2>
+
+            <div class="calculation-step">
+                <h3>Pas 1: Balanç de Matèria i Capacitat d'Evaporació Total</h3>
+                <p>Primer, determinem la quantitat total d'aigua que s'ha d'evaporar anualment.</p>
+                <div class="explanation">
+                    <p><strong>Cabal d'alimentació anual (\(L_0\)):</strong></p>
+                    <p>\( L_0 = 200 \, \frac{\text{t}}{\text{dia}} \times 300 \, \frac{\text{dies}}{\text{any}} = \) <span class="value-highlight">60000</span> \( \, \frac{\text{t}}{\text{any}} \)</p>
+                    <p><strong>Concentracions:</strong> \( x_0 = 0.10 \), \( x_1 = 0.35 \).</p>
+                    <p><strong>Balanç de solut (\(L_0 x_0 = L_N x_N\)):</strong> Calculem el cabal de producte concentrat anual (\(L_N\)).</p>
+                    <p>\( L_N = L_0 \frac{x_0}{x_N} = (60000 \, \text{t/any}) \times \frac{0.10}{0.35} \approx \) <span class="value-highlight">17142.9</span> \( \, \text{t/any} \)</p>
+                    <p><strong>Capacitat d'evaporació total anual (\(C = \sum V_i\)):</strong></p>
+                    <p>\( C = L_0 - L_N = (60000 \, \text{t/any}) - (17142.9 \, \text{t/any}) = \) <span class="value-highlight">42857.1</span> \( \, \text{t/any} \)</p>
+                    <p>Convertim la capacitat a kg/any:</p>
+                    <p>\( C = 42857.1 \, \frac{\text{t}}{\text{any}} \times 1000 \, \frac{\text{kg}}{\text{t}} = \) <span class="value-highlight">\(4.2857 \times 10^7\)</span> \( \, \text{kg/any} \)</p>
+                </div>
+            </div>
+
+            <div class="calculation-step">
+                <h3>Pas 2: Consum Anual de Vapor Primari (\(V_0\)) en Funció de \(N\)</h3>
+                <p>L'economia (\(E\)) relaciona la quantitat total evaporada (\(C\)) amb el vapor primari consumit (\(V_0\)).</p>
+                <div class="math-block">
+                    $$ E = \frac{C}{V_0} = 0.90 \cdot N $$
+                </div>
+                <p>Aïllem \(V_0\):</p>
+                <div class="math-block">
+                    $$ V_0 = \frac{C}{0.90 \cdot N} $$
+                </div>
+                <div class="explanation">
+                    <p>Substituint el valor de \(C\) en kg/any:</p>
+                    <p>\( V_0 = \frac{4.2857 \times 10^7 \, \text{kg/any}}{0.90 \cdot N} = \frac{4.7619 \times 10^7}{N} \, \text{kg/any} \)</p>
+                    <p class="reference-note">(Nota: El PDF treballa en t/dia inicialment, \(V_0 = \frac{142.857}{0.9N} = \frac{158.73}{N}\) t/dia. Convertint a kg/any: \( \frac{158.73}{N} \frac{\text{t}}{\text{dia}} \times 1000 \frac{\text{kg}}{\text{t}} \times 300 \frac{\text{dies}}{\text{any}} = \frac{4.7619 \times 10^7}{N} \) kg/any. Els càlculs són consistents.)</p>
+                </div>
+            </div>
+
+            <div class="calculation-step">
+                <h3>Pas 3: Formulació de la Funció de Cost Anual Total (\(C_T\))</h3>
+                <p>El cost anual total és la suma dels costos fixos anuals (relacionats amb la inversió) i els costos variables anuals (cost del vapor primari). El cost de mà d'obra, en ser constant, no influeix en la determinació del \(N\) òptim i pot ser omès de la funció a optimitzar.</p>
+                <div class="explanation">
+                    <p><strong>Costos Fixos Anuals (\(C_F\)):</strong> Corresponen al 45% del cost d'inversió.</p>
+                    <p>\( C_F = 0.45 \times C_{\text{inv}} = 0.45 \times (36000 \cdot N \, €) \)</p>
+                    <p>\( C_F = 16200 \cdot N \, € \)</p>
+                    <p>El cost fix anual és: <span class="value-highlight">\(16200 \cdot N\)</span> €/any.</p>
+
+                    <p class="mt-4"><strong>Costos Variables Anuals (\(C_V\)):</strong> Cost del vapor primari consumit.</p>
+                     <p>\( C_V = V_0 \, (\text{kg/any}) \times C_{\text{vapor}} \, (€/\text{kg}) \)</p>
+                    <p>\( C_V = \left( \frac{4.7619 \times 10^7}{N} \right) \, \text{kg/any} \times (0.0114 \, €/\text{kg}) \)</p>
+                     <p>\( C_V = \frac{542857}{N} \, €/\text{any} \)</p>
+                    <p>El cost variable anual és: <span class="value-highlight">\( \frac{542857}{N} \)</span> €/any.</p>
+                     <p class="reference-note">(Nota: El PDF obté 542857.1425 / N, la petita diferència és per l'arrodoniment de V₀ intermedi. Utilitzarem el valor calculat aquí.)</p>
+
+                    <p class="mt-4"><strong>Cost Anual Total a Optimitzar (\(C_T'\)):</strong> Suma de costos fixos i variables dependents de \(N\).</p>
+                    <div class="math-block">
+                       $$ C_T'(N) = C_F + C_V = 16200 N + \frac{542857}{N} $$
+                    </div>
+                     <p class="assumption">(S'omet el cost constant de mà d'obra \(k\), ja que \( \frac{d(k)}{dN} = 0 \)).</p>
+                </div>
+            </div>
+
+             <div class="calculation-step">
+                <h3>Pas 4: Optimització de la Funció de Cost</h3>
+                <p>Per trobar el nombre òptim d'efectes (\(N_{\text{opt}}\)) que minimitza el cost anual \(C_T'(N)\), derivem la funció respecte a \(N\) i igualem la derivada a zero.</p>
+                 <div class="math-block">
+                    $$ \frac{dC_T'}{dN} = \frac{d}{dN} \left( 16200 N + 542857 N^{-1} \right) $$
+                    $$ \frac{dC_T'}{dN} = 16200 - 542857 N^{-2} = 16200 - \frac{542857}{N^2} $$
+                </div>
+                 <p>Igualem la derivada a zero per trobar el punt crític (mínim):</p>
+                 <div class="math-block">
+                    $$ 16200 - \frac{542857}{N_{\text{opt}}^2} = 0 $$
+                    $$ 16200 = \frac{542857}{N_{\text{opt}}^2} $$
+                    $$ N_{\text{opt}}^2 = \frac{542857}{16200} \approx 33.5097 $$
+                    $$ N_{\text{opt}} = \sqrt{33.5097} \approx 5.7888 $$
+                </div>
+                 <p class="explanation">El càlcul matemàtic suggereix un nombre òptim d'efectes al voltant de 5.79. No obstant això, el nombre d'efectes (\(N\)) ha de ser un nombre enter.</p>
+            </div>
+
+            <div class="calculation-step">
+                <h3>Pas 5: Determinació del Nombre Enter Òptim d'Efectes</h3>
+                <p>Com que \(N\) ha de ser un nombre enter, hem d'avaluar el cost total \(C_T'(N)\) per als valors enters més propers a \(N_{\text{opt}} \approx 5.79\), és a dir, per a \(N=5\) i \(N=6\), i seleccionar aquell que resulti en un cost menor.</p>
+                <div class="explanation">
+                     <p><strong>Càlcul del cost per a \(N=5\):</strong></p>
+                     <p>\( C_T'(5) = 16200 \times 5 + \frac{542857}{5} = 81000 + 108571.4 \)</p>
+                     <p>\( C_T'(5) = \) <span class="value-highlight">189571.4</span> €/any.</p>
+
+                     <p class="mt-4"><strong>Càlcul del cost per a \(N=6\):</strong></p>
+                     <p>\( C_T'(6) = 16200 \times 6 + \frac{542857}{6} = 97200 + 90476.2 \)</p>
+                     <p>\( C_T'(6) = \) <span class="value-highlight">187676.2</span> €/any.</p>
+
+                     <p class="mt-4"><strong>Comparació:</strong></p>
+                     <p>El cost anual per a \(N=6\) (\(187676.2 \, €\)) és inferior al cost per a \(N=5\) (\(189571.4 \, €\)).</p>
+                     <p class="mt-4"><strong>Conclusió:</strong> El nombre òptim d'efectes, considerant que ha de ser un nombre enter, és \(N_{\text{opt}} = 6\).</p>
+
+                     <table class="table-auto">
+                         <thead>
+                             <tr><th>\(N\) (Nombre d'Efectes)</th><th>Cost Anual \(C_T'(N)\) (€/any)</th></tr>
+                         </thead>
+                         <tbody>
+                             <tr><td>5</td><td>189571.4</td></tr>
+                             <tr><td><strong>6</strong></td><td><strong>187676.2</strong> (Mínim)</td></tr>
+                         </tbody>
+                     </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="resum" class="mb-12 p-6 rounded-lg shadow-lg section-bg-light">
+            <h2 class="text-sky-800 border-b-2 border-sky-300 pb-2 mb-6">Conclusió de l'Optimització</h2>
+            <p>L'anàlisi econòmica, que balanceja els costos fixos anuals associats a la inversió (proporcionals a \(N\)) i els costos variables anuals del vapor primari (inversament proporcionals a \(N\)), indica que el cost total anual mínim s'obté quan:</p>
+             <div class="output-grid">
+                 <div class="output-item col-span-full md:col-span-1"><span class="output-label">Nombre Òptim d'Efectes (\(N_{\text{opt}}\))</span><span class="output-value">6</span><span class="output-unit"></span></div>
+             </div>
+             <p class="mt-6 explanation">Aquesta optimització es basa en les dades de costos i l'estimació de l'economia proporcionades. Canvis en el cost de l'energia, el cost d'inversió, les taxes d'interès o l'eficiència real de l'evaporador (economia) podrien modificar el resultat òptim. La metodologia, però, segueix sent vàlida: trobar el punt on la disminució marginal del cost del vapor s'equilibra amb l'increment marginal del cost d'inversió anualitzat.</p>
+        </section>
+
+    </main>
+
+    <footer class="mt-16 pt-8 border-t border-gray-300 text-sm text-gray-600">
+        <p class="footer-attribution">Anàlisi d'Operacions Unitàries - Curs Avançat</p>
+    </footer>
+
+    <script>
+        // No cal JavaScript per funcionalitat, només per MathJax.
+        // MathJax s'executarà automàticament en carregar la pàgina.
+    </script>
+
+</body>
+</html>
